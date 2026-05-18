@@ -4,6 +4,15 @@ import { supabase } from '../../lib/supabase'
 
 export const revalidate = 60
 
+export async function generateStaticParams() {
+  const { data } = await supabase
+    .from('posts')
+    .select('slug')
+    .eq('published', true)
+
+  return (data || []).map(post => ({ slug: post.slug }))
+}
+
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-IN', {
     year: 'numeric', month: 'long', day: 'numeric'
