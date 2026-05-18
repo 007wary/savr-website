@@ -1,4 +1,4 @@
-import { supabaseAdmin } from '@/app/lib/supabase-admin'
+import { supabaseAdmin } from '../../lib/supabase-admin'
 import { NextResponse } from 'next/server'
 
 function checkAuth(request) {
