@@ -1,11 +1,8 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '../../lib/supabase'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-)
+export const revalidate = 60
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-IN', {
@@ -45,24 +42,20 @@ export default async function PostPage({ params }) {
     <main style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '100px', paddingBottom: '80px' }}>
       <div className="container" style={{ maxWidth: '780px' }}>
 
-        {/* Back */}
         <Link href="/blog" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '14px', textDecoration: 'none', marginBottom: '40px' }}>
           ← Back to Blog
         </Link>
 
-        {/* Category */}
         {post.category && (
           <p style={{ color: 'var(--accent)', fontSize: '13px', fontWeight: '700', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '16px' }}>
             {post.category}
           </p>
         )}
 
-        {/* Title */}
         <h1 style={{ fontSize: '40px', fontWeight: '900', color: 'var(--text-primary)', lineHeight: '1.2', marginBottom: '24px' }}>
           {post.title}
         </h1>
 
-        {/* Author row */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid var(--border)' }}>
           <Avatar src={post.author_image} name={post.author} />
           <div>
@@ -75,21 +68,18 @@ export default async function PostPage({ params }) {
           </div>
         </div>
 
-        {/* Cover image */}
         {post.cover_image && (
           <div style={{ width: '100%', height: '400px', borderRadius: '16px', overflow: 'hidden', marginBottom: '48px' }}>
             <img src={post.cover_image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         )}
 
-        {/* Excerpt */}
         {post.excerpt && (
           <p style={{ color: 'var(--text-primary)', fontSize: '20px', lineHeight: '1.7', marginBottom: '40px', fontWeight: '400', opacity: 0.85 }}>
             {post.excerpt}
           </p>
         )}
 
-        {/* Content */}
         <div
           style={{ color: 'var(--text-muted)', fontSize: '17px', lineHeight: '1.9' }}
           dangerouslySetInnerHTML={{ __html: post.content }}
