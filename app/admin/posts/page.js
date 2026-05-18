@@ -40,13 +40,13 @@ export default function AdminPosts() {
   }
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center">
+    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center" style={{ paddingTop: '100px' }}>
       <p className="text-gray-400">Loading...</p>
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] px-6 py-12">
+    <div className="min-h-screen bg-[#0A0A0F] px-6 py-12" style={{ paddingTop: '100px' }}>
       <div className="max-w-4xl mx-auto">
 
         <div className="flex items-center justify-between mb-8">

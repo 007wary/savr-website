@@ -54,14 +54,16 @@ export default function EditPost({ params }) {
     setExcerpt(post.excerpt || '')
     setCoverImage(post.cover_image || '')
     setPublished(post.published)
-    editor?.commands.setContent(post.content || '')
     setLoading(false)
+    return post
   }
 
   useEffect(() => {
-    if (editor && !loading) {
+    if (editor) {
       const token = localStorage.getItem('admin_token')
-      fetchPost(token)
+      fetchPost(token).then(post => {
+        if (post) editor.commands.setContent(post.content || '')
+      })
     }
   }, [editor])
 
@@ -101,7 +103,7 @@ export default function EditPost({ params }) {
   }
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center">
+    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center" style={{ paddingTop: '100px' }}>
       <p className="text-gray-400">Loading post...</p>
     </div>
   )
