@@ -20,6 +20,7 @@ export default function EditPost({ params }) {
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
+  const [htmlMode, setHtmlMode] = useState(false)
   const router = useRouter()
 
   const editor = useEditor({
@@ -269,6 +270,24 @@ export default function EditPost({ params }) {
               {btn.label}
             </button>
           ))}
+        <button
+            onClick={() => {
+              if (!htmlMode) {
+                setHtmlMode(true)
+              } else {
+                editor?.commands.setContent(document.getElementById('html-editor').value)
+                setHtmlMode(false)
+              }
+            }}
+            style={{
+              marginLeft: 'auto', padding: '6px 14px', borderRadius: '8px',
+              fontSize: '13px', fontWeight: '600', cursor: 'pointer', border: 'none',
+              background: htmlMode ? '#6C63FF' : 'rgba(255,255,255,0.05)',
+              color: htmlMode ? '#fff' : '#9ca3af',
+            }}
+          >
+            {htmlMode ? '← Visual' : '<> HTML'}
+          </button>
         </div>
 
         {/* Editor */}
@@ -279,7 +298,21 @@ export default function EditPost({ params }) {
           borderRadius: '0 0 12px 12px',
           padding: '20px 24px',
         }}>
-          <EditorContent editor={editor} />
+          {htmlMode ? (
+            <textarea
+              id="html-editor"
+              defaultValue={editor?.getHTML()}
+              style={{
+                width: '100%', minHeight: '400px', background: 'transparent',
+                border: 'none', outline: 'none', color: '#d1d5db',
+                fontSize: '14px', lineHeight: '1.8', fontFamily: 'monospace',
+                resize: 'vertical', boxSizing: 'border-box',
+              }}
+              placeholder="Write raw HTML here..."
+            />
+          ) : (
+            <EditorContent editor={editor} />
+          )}
         </div>
 
       </div>
