@@ -14,12 +14,12 @@ export default function Navbar() {
   }, [])
 
   const navLinks = [
-    { label: 'Features', href: '#features' },
-    { label: 'Why Savr', href: '#why-savr' },
-    { label: 'Blog', href: '#blog' },
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contact', href: '/contact' },
-  ]
+  { label: 'Features', href: '/#features' },
+  { label: 'Why Savr', href: '/#why-savr' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'FAQ', href: '/#faq' },
+  { label: 'Contact', href: '/contact' },
+]
 
   return (
     <nav style={{
