@@ -40,71 +40,91 @@ export default function AdminPosts() {
   }
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center" style={{ paddingTop: '100px' }}>
-      <p className="text-gray-400">Loading...</p>
+    <div style={{ minHeight: '100vh', background: '#0A0A0F', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '100px' }}>
+      <p style={{ color: '#6b7280' }}>Loading...</p>
     </div>
   )
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] px-6 py-12" style={{ paddingTop: '100px' }}>
-      <div className="max-w-4xl mx-auto">
+    <div style={{ minHeight: '100vh', background: '#0A0A0F', paddingTop: '100px', paddingBottom: '80px' }}>
+      <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 32px' }}>
 
-        <div className="flex items-center justify-between mb-8">
+        {/* Header */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
           <div>
-            <h1 className="text-3xl font-bold text-white">Posts</h1>
-            <p className="text-gray-400 mt-1">{posts.length} total</p>
+            <h1 style={{ fontSize: '32px', fontWeight: '800', color: '#fff', marginBottom: '4px' }}>Posts</h1>
+            <p style={{ color: '#6b7280', fontSize: '14px' }}>{posts.length} total</p>
           </div>
-          <div className="flex gap-3">
-            <Link
-              href="/admin/posts/new"
-              className="bg-[#6C63FF] hover:bg-[#5a52d5] text-white font-semibold px-5 py-2.5 rounded-xl transition-colors"
-            >
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <Link href="/admin/posts/new" style={{
+              background: '#6C63FF', color: '#fff', fontWeight: '600',
+              padding: '10px 20px', borderRadius: '12px', textDecoration: 'none',
+              fontSize: '14px', transition: 'background 0.2s ease',
+            }}>
               + New Post
             </Link>
-            <button
-              onClick={logout}
-              className="bg-white/5 hover:bg-white/10 text-gray-400 px-5 py-2.5 rounded-xl transition-colors"
-            >
+            <button onClick={logout} style={{
+              background: 'rgba(255,255,255,0.05)', color: '#9ca3af',
+              border: '1px solid rgba(255,255,255,0.1)',
+              padding: '10px 20px', borderRadius: '12px', cursor: 'pointer',
+              fontSize: '14px', transition: 'background 0.2s ease',
+            }}>
               Logout
             </button>
           </div>
         </div>
 
+        {/* Posts list */}
         {posts.length === 0 ? (
-          <div className="text-center py-20 bg-white/5 border border-white/10 rounded-2xl">
-            <p className="text-gray-400 text-lg mb-4">No posts yet.</p>
-            <Link href="/admin/posts/new" className="text-[#6C63FF] hover:underline">
+          <div style={{ textAlign: 'center', padding: '80px 0', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px' }}>
+            <p style={{ color: '#6b7280', fontSize: '16px', marginBottom: '16px' }}>No posts yet.</p>
+            <Link href="/admin/posts/new" style={{ color: '#6C63FF', textDecoration: 'none', fontSize: '14px' }}>
               Write your first post →
             </Link>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {posts.map(post => (
-              <div key={post.id} className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 flex items-center justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-1">
-                    <h2 className="text-white font-medium">{post.title}</h2>
-                    <span className={`text-xs px-2 py-0.5 rounded-full ${post.published ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+              <div key={post.id} style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '16px',
+                padding: '20px 24px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '16px',
+              }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                    <h2 style={{ color: '#fff', fontWeight: '600', fontSize: '16px' }}>{post.title}</h2>
+                    <span style={{
+                      fontSize: '11px', padding: '2px 10px', borderRadius: '100px', fontWeight: '600',
+                      background: post.published ? 'rgba(74,222,128,0.1)' : 'rgba(234,179,8,0.1)',
+                      color: post.published ? '#4ade80' : '#eab308',
+                    }}>
                       {post.published ? 'Published' : 'Draft'}
                     </span>
                   </div>
-                  <p className="text-gray-500 text-sm">
+                  <p style={{ color: '#6b7280', fontSize: '13px' }}>
                     {new Date(post.created_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
                     {' · '}
                     /{post.slug}
                   </p>
                 </div>
-                <div className="flex gap-2">
-                  <Link
-                    href={`/admin/posts/${post.id}/edit`}
-                    className="bg-white/5 hover:bg-white/10 text-gray-300 px-4 py-2 rounded-lg text-sm transition-colors"
-                  >
+                <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
+                  <Link href={`/admin/posts/${post.id}/edit`} style={{
+                    background: 'rgba(255,255,255,0.05)', color: '#d1d5db',
+                    padding: '8px 16px', borderRadius: '10px', textDecoration: 'none',
+                    fontSize: '13px', fontWeight: '500',
+                  }}>
                     Edit
                   </Link>
-                  <button
-                    onClick={() => deletePost(post.id)}
-                    className="bg-red-500/10 hover:bg-red-500/20 text-red-400 px-4 py-2 rounded-lg text-sm transition-colors"
-                  >
+                  <button onClick={() => deletePost(post.id)} style={{
+                    background: 'rgba(239,68,68,0.1)', color: '#f87171',
+                    border: 'none', padding: '8px 16px', borderRadius: '10px',
+                    cursor: 'pointer', fontSize: '13px', fontWeight: '500',
+                  }}>
                     Delete
                   </button>
                 </div>
