@@ -1,16 +1,22 @@
+import { supabase } from '../lib/supabase'
 import { HeroMainCard, HeroSideCard } from './BlogCard'
 import BlogCard from './BlogCard'
 import AllStories from './AllStories'
 import Newsletter from '../../components/Contact'
 import Footer from '../../components/Footer'
 
+export const revalidate = 60
+
 async function getAllPosts() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts?limit=100&offset=0`,
-    { next: { revalidate: 60 } }
-  )
-  if (!res.ok) return { posts: [], total: 0 }
-  return res.json()
+  const { data, error, count } = await supabase
+    .from('posts')
+    .select('id, title, slug, excerpt, cover_image, created_at, category, author, author_image', { count: 'exact' })
+    .eq('published', true)
+    .order('created_at', { ascending: false })
+    .range(0, 99)
+
+  if (error) return { posts: [], total: 0 }
+  return { posts: data, total: count }
 }
 
 export const metadata = {
