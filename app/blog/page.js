@@ -4,10 +4,10 @@ import AllStories from './AllStories'
 import Newsletter from '../../components/Contact'
 import Footer from '../../components/Footer'
 
-async function getPosts(limit, offset) {
+async function getAllPosts() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts?limit=${limit}&offset=${offset}`,
-    { cache: 'no-store' }
+    `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts?limit=100&offset=0`,
+    { next: { revalidate: 60 } }
   )
   if (!res.ok) return { posts: [], total: 0 }
   return res.json()
@@ -19,20 +19,20 @@ export const metadata = {
 }
 
 export default async function BlogPage() {
-  // Fetch top 7 for hero + more news, then 9 for all stories
-  const { posts: topPosts } = await getPosts(7, 0)
-  const { posts: storyPosts, total } = await getPosts(9, 7)
+  const { posts, total } = await getAllPosts()
 
-  const heroMain = topPosts[0]
-  const heroSide = topPosts.slice(1, 4)
-  const gridPosts = topPosts.slice(4, 7)
+  const heroMain = posts[0]
+  const heroSide = posts.slice(1, 4)
+  const gridPosts = posts.slice(4, 7)
+  const storyPosts = posts.slice(7, 16)
+  const remainingTotal = total - 7
 
   return (
     <>
       <main style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '100px', paddingBottom: '0' }}>
         <div className="container" style={{ maxWidth: '1100px' }}>
 
-          {topPosts.length === 0 ? (
+          {posts.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '120px 0' }}>
               <p style={{ color: 'var(--text-muted)', fontSize: '17px' }}>No posts yet. Check back soon.</p>
             </div>
@@ -41,10 +41,10 @@ export default async function BlogPage() {
               {/* ── HERO SECTION ── */}
               {heroMain && (
                 <section style={{ marginBottom: '64px' }}>
-                  <div style={{ display: 'flex', gap: '48px', alignItems: 'flex-start' }}>
+                  <div className="blog-hero">
                     <HeroMainCard post={heroMain} />
                     {heroSide.length > 0 && (
-                      <div style={{ flex: '0 0 340px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                      <div className="blog-hero-side">
                         {heroSide.map(post => (
                           <HeroSideCard key={post.id} post={post} />
                         ))}
@@ -63,7 +63,7 @@ export default async function BlogPage() {
                     </h2>
                     <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
+                  <div className="blog-grid-3">
                     {gridPosts.map(post => (
                       <BlogCard key={post.id} post={post} />
                     ))}
@@ -71,20 +71,74 @@ export default async function BlogPage() {
                 </section>
               )}
 
-              {/* ── ALL STORIES (client component with load more) ── */}
+              {/* ── ALL STORIES ── */}
               <AllStories
                 initialPosts={storyPosts}
-                initialTotal={total - 7}
-                initialOffset={7 + 9}
+                initialTotal={remainingTotal}
+                initialOffset={16}
               />
-
             </>
           )}
 
         </div>
+
+        <style>{`
+          .blog-hero {
+            display: flex;
+            gap: 48px;
+            align-items: flex-start;
+          }
+          .blog-hero-side {
+            flex: 0 0 340px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+          }
+          .blog-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+          }
+          .blog-stories-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0 48px;
+          }
+          @media (max-width: 900px) {
+            .blog-hero {
+              flex-direction: column;
+              gap: 32px;
+            }
+            .blog-hero-side {
+              flex: unset;
+              width: 100%;
+            }
+            .blog-grid-3 {
+              grid-template-columns: repeat(2, 1fr);
+              gap: 24px;
+            }
+            .blog-stories-3 {
+              grid-template-columns: repeat(2, 1fr);
+              gap: 0 32px;
+            }
+          }
+          @media (max-width: 580px) {
+            .blog-hero-side {
+              display: none;
+            }
+            .blog-grid-3 {
+              grid-template-columns: 1fr;
+              gap: 24px;
+            }
+            .blog-stories-3 {
+              grid-template-columns: 1fr;
+              gap: 0;
+            }
+          }
+        `}</style>
+
       </main>
 
-      {/* Newsletter + Footer */}
       <Newsletter />
       <Footer />
     </>

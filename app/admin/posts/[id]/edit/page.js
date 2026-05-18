@@ -6,8 +6,10 @@ import StarterKit from '@tiptap/starter-kit'
 import LinkExt from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import Placeholder from '@tiptap/extension-placeholder'
+import { use } from 'react'
 
 export default function EditPost({ params }) {
+  const { id } = use(params)
   const [title, setTitle] = useState('')
   const [slug, setSlug] = useState('')
   const [excerpt, setExcerpt] = useState('')
@@ -44,7 +46,7 @@ export default function EditPost({ params }) {
     })
     if (res.status === 401) { router.push('/admin'); return }
     const posts = await res.json()
-    const post = posts.find(p => p.id === params.id)
+    const post = posts.find(p => p.id === id)
     if (!post) { router.push('/admin/posts'); return }
 
     setTitle(post.title)
@@ -79,7 +81,7 @@ export default function EditPost({ params }) {
         'x-admin-token': token
       },
       body: JSON.stringify({
-        id: params.id,
+        id: id,
         title,
         slug,
         excerpt,
@@ -105,7 +107,7 @@ export default function EditPost({ params }) {
   )
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] px-6 py-12">
+    <div className="min-h-screen bg-[#0A0A0F] px-6 py-12" style={{ paddingTop: '100px' }}>
       <div className="max-w-3xl mx-auto">
 
         <div className="flex items-center justify-between mb-8">

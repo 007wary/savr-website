@@ -26,7 +26,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center px-6">
+    <div className="min-h-screen bg-[#0A0A0F] flex items-center justify-center px-6" style={{ paddingTop: '80px' }}>
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold text-white mb-2">Admin</h1>

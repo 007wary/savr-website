@@ -32,7 +32,6 @@ export default function AllStories({ initialPosts, initialTotal, initialOffset }
 
   return (
     <section style={{ marginBottom: '80px' }}>
-      {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px' }}>
         <h2 style={{ color: 'var(--text-primary)', fontSize: '22px', fontWeight: '800', whiteSpace: 'nowrap' }}>
           All stories
@@ -40,14 +39,12 @@ export default function AllStories({ initialPosts, initialTotal, initialOffset }
         <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
       </div>
 
-      {/* 3-column grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0 48px' }}>
+      <div className="blog-stories-3">
         {posts.map(post => (
           <StoryCard key={post.id} post={post} />
         ))}
       </div>
 
-      {/* Load more button */}
       {hasMore && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '48px' }}>
           <button
