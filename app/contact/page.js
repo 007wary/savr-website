@@ -9,12 +9,22 @@ export default function ContactPage() {
   const [formStatus, setFormStatus] = useState(null)
 
   const handleContact = async (e) => {
-    e.preventDefault()
-    setFormStatus('loading')
-    await new Promise(r => setTimeout(r, 1000))
+  e.preventDefault()
+  setFormStatus('loading')
+
+  const res = await fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form),
+  })
+
+  if (res.ok) {
     setFormStatus('success')
     setForm({ name: '', email: '', message: '' })
+  } else {
+    setFormStatus('error')
   }
+}
 
   return (
     <>
