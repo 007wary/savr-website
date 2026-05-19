@@ -59,7 +59,7 @@ export async function POST(request) {
       },
       body: JSON.stringify({
         from: 'Savr <onboarding@resend.dev>',
-        to: normalised,
+        to: '007mwnswrangwary@gmail.com',
         subject: isAppUser ? 'Welcome to Savr.' : 'You\'re on the list.',
         html: isAppUser ? `
           <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 480px; margin: 0 auto; padding: 40px 24px; color: #111111;">
