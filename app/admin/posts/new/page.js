@@ -16,6 +16,8 @@ export default function NewPost() {
   const [slug, setSlug] = useState('')
   const [excerpt, setExcerpt] = useState('')
   const [coverImage, setCoverImage] = useState('')
+  const [category, setCategory] = useState('')
+  const [author, setAuthor] = useState('Wary Dev')
   const [published, setPublished] = useState(false)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -41,13 +43,13 @@ export default function NewPost() {
   }, [])
 
   useEffect(() => {
-  if (title) {
-    const timeout = setTimeout(() => {
-      setSlug(slugify(title))
-    }, 500)
-    return () => clearTimeout(timeout)
-  }
-}, [title])
+    if (title) {
+      const timeout = setTimeout(() => {
+        setSlug(slugify(title))
+      }, 500)
+      return () => clearTimeout(timeout)
+    }
+  }, [title])
 
   async function handleSave(publish) {
     if (!title || !editor?.getHTML()) {
@@ -70,6 +72,8 @@ export default function NewPost() {
         excerpt,
         content: editor.getHTML(),
         cover_image: coverImage,
+        category,
+        author,
         published: publish
       })
     })
@@ -87,6 +91,7 @@ export default function NewPost() {
     <div className="min-h-screen bg-[#0A0A0F] px-6 py-12">
       <div className="max-w-3xl mx-auto">
 
+        {/* Top bar */}
         <div className="flex items-center justify-between mb-8">
           <button onClick={() => router.push('/admin/posts')} className="text-gray-400 hover:text-white transition-colors">
             ← Back
@@ -111,35 +116,78 @@ export default function NewPost() {
 
         {message && <p className="text-red-400 text-sm mb-4">{message}</p>}
 
+        {/* Title */}
+        <input
+          type="text"
+          placeholder="Post title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full bg-transparent text-white text-4xl font-bold placeholder-gray-700 focus:outline-none mb-8"
+        />
+
+        {/* Fields grid */}
         <div className="space-y-4 mb-6">
-          <input
-            type="text"
-            placeholder="Post title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-transparent text-white text-4xl font-bold placeholder-gray-700 focus:outline-none"
-          />
-          <input
-            type="text"
-            placeholder="slug (auto-generated)"
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-400 text-sm placeholder-gray-700 focus:outline-none focus:border-[#6C63FF] transition-colors"
-          />
-          <input
-            type="text"
-            placeholder="Short excerpt (shown on blog listing)"
-            value={excerpt}
-            onChange={(e) => setExcerpt(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
-          />
-          <input
-            type="text"
-            placeholder="Cover image URL (optional)"
-            value={coverImage}
-            onChange={(e) => setCoverImage(e.target.value)}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
-          />
+
+          {/* Row 1: Slug | Category */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Slug</label>
+              <input
+                type="text"
+                placeholder="slug (auto-generated)"
+                value={slug}
+                onChange={(e) => setSlug(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Category</label>
+              <input
+                type="text"
+                placeholder="e.g. Personal Finance"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
+              />
+            </div>
+          </div>
+
+          {/* Row 2: Author | Cover Image */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Author</label>
+              <input
+                type="text"
+                placeholder="Author name"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Cover Image URL</label>
+              <input
+                type="text"
+                placeholder="https://..."
+                value={coverImage}
+                onChange={(e) => setCoverImage(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
+              />
+            </div>
+          </div>
+
+          {/* Row 3: Excerpt (full width) */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Excerpt</label>
+            <input
+              type="text"
+              placeholder="Short excerpt (shown on blog listing)"
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
+            />
+          </div>
+
         </div>
 
         {/* Toolbar */}
