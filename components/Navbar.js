@@ -18,6 +18,7 @@ export default function Navbar() {
   { label: 'Why Savr', href: '/#why-savr' },
   { label: 'Blog', href: '/blog' },
   { label: 'FAQ', href: '/#faq' },
+  { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ]
 
