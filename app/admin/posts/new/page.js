@@ -88,7 +88,7 @@ export default function NewPost() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] px-6 py-12">
+    <div className="min-h-screen bg-[#0A0A0F] px-6 pt-24 pb-12">
       <div className="max-w-3xl mx-auto">
 
         {/* Top bar */}
