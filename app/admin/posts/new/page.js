@@ -18,7 +18,6 @@ export default function NewPost() {
   const [coverImage, setCoverImage] = useState('')
   const [category, setCategory] = useState('')
   const [author, setAuthor] = useState('Wary Dev')
-  const [published, setPublished] = useState(false)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
@@ -32,7 +31,7 @@ export default function NewPost() {
     ],
     editorProps: {
       attributes: {
-        class: 'prose prose-invert prose-lg max-w-none focus:outline-none min-h-[300px] text-gray-300',
+        style: 'min-height: 400px; outline: none; color: #d1d5db; font-size: 16px; line-height: 1.8;',
       },
     },
   })
@@ -44,9 +43,7 @@ export default function NewPost() {
 
   useEffect(() => {
     if (title) {
-      const timeout = setTimeout(() => {
-        setSlug(slugify(title))
-      }, 500)
+      const timeout = setTimeout(() => setSlug(slugify(title)), 500)
       return () => clearTimeout(timeout)
     }
   }, [title])
@@ -88,33 +85,33 @@ export default function NewPost() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0F] px-6 pb-12" style={{ paddingTop: '80px' }}>
-      <div className="max-w-3xl mx-auto">
+    <div style={{ minHeight: '100vh', background: '#0A0A0F', paddingTop: '100px', paddingBottom: '80px' }}>
+      <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 32px' }}>
 
         {/* Top bar */}
-        <div className="flex items-center justify-between mb-8">
-          <button onClick={() => router.push('/admin/posts')} className="text-gray-400 hover:text-white transition-colors">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
+          <button onClick={() => router.push('/admin/posts')} style={{ color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
             ← Back
           </button>
-          <div className="flex gap-3">
-            <button
-              onClick={() => handleSave(false)}
-              disabled={saving}
-              className="bg-white/5 hover:bg-white/10 text-gray-300 px-5 py-2.5 rounded-xl text-sm transition-colors disabled:opacity-50"
-            >
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button onClick={() => handleSave(false)} disabled={saving} style={{
+              background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+              color: '#9ca3af', padding: '10px 20px', borderRadius: '12px',
+              cursor: 'pointer', fontSize: '14px', fontWeight: '500',
+            }}>
               Save Draft
             </button>
-            <button
-              onClick={() => handleSave(true)}
-              disabled={saving}
-              className="bg-[#6C63FF] hover:bg-[#5a52d5] text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors disabled:opacity-50"
-            >
+            <button onClick={() => handleSave(true)} disabled={saving} style={{
+              background: '#6C63FF', color: '#fff', border: 'none',
+              padding: '10px 20px', borderRadius: '12px',
+              cursor: 'pointer', fontSize: '14px', fontWeight: '600',
+            }}>
               {saving ? 'Publishing...' : 'Publish'}
             </button>
           </div>
         </div>
 
-        {message && <p className="text-red-400 text-sm mb-4">{message}</p>}
+        {message && <p style={{ color: '#f87171', fontSize: '14px', marginBottom: '16px' }}>{message}</p>}
 
         {/* Title */}
         <input
@@ -122,76 +119,104 @@ export default function NewPost() {
           placeholder="Post title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full bg-transparent text-white text-4xl font-bold placeholder-gray-700 focus:outline-none mb-8"
+          style={{
+            width: '100%', background: 'transparent', border: 'none', outline: 'none',
+            color: '#fff', fontSize: '36px', fontWeight: '800',
+            marginBottom: '24px', lineHeight: '1.2',
+          }}
         />
 
-        {/* Fields grid */}
-        <div className="space-y-4 mb-6">
-
-          {/* Row 1: Slug | Category */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Slug</label>
-              <input
-                type="text"
-                placeholder="slug (auto-generated)"
-                value={slug}
-                onChange={(e) => setSlug(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Category</label>
-              <input
-                type="text"
-                placeholder="e.g. Personal Finance"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
-              />
-            </div>
-          </div>
-
-          {/* Row 2: Author | Cover Image */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Author</label>
-              <input
-                type="text"
-                placeholder="Author name"
-                value={author}
-                onChange={(e) => setAuthor(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Cover Image URL</label>
-              <input
-                type="text"
-                placeholder="https://..."
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
-              />
-            </div>
-          </div>
-
-          {/* Row 3: Excerpt (full width) */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-xs font-semibold text-gray-500 tracking-widest uppercase">Excerpt</label>
+        {/* Row 1: Slug | Category */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
+          <div>
+            <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Slug</label>
             <input
               type="text"
-              placeholder="Short excerpt (shown on blog listing)"
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-gray-300 text-sm placeholder-gray-600 focus:outline-none focus:border-[#6C63FF] transition-colors"
+              placeholder="slug (auto-generated)"
+              value={slug}
+              onChange={(e) => setSlug(e.target.value)}
+              style={{
+                width: '100%', background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+                padding: '10px 14px', color: '#9ca3af', fontSize: '14px', outline: 'none',
+                boxSizing: 'border-box',
+              }}
             />
           </div>
+          <div>
+            <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Category</label>
+            <input
+              type="text"
+              placeholder="e.g. Personal Finance"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              style={{
+                width: '100%', background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+                padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+        </div>
 
+        {/* Row 2: Author | Cover Image */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
+          <div>
+            <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Author</label>
+            <input
+              type="text"
+              placeholder="Wary Dev"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+              style={{
+                width: '100%', background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+                padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+          <div>
+            <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Cover Image URL</label>
+            <input
+              type="text"
+              placeholder="https://..."
+              value={coverImage}
+              onChange={(e) => setCoverImage(e.target.value)}
+              style={{
+                width: '100%', background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+                padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
+                boxSizing: 'border-box',
+              }}
+            />
+          </div>
+        </div>
+
+        {/* Row 3: Excerpt */}
+        <div style={{ marginBottom: '24px' }}>
+          <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Excerpt</label>
+          <input
+            type="text"
+            placeholder="Short description shown in blog listings..."
+            value={excerpt}
+            onChange={(e) => setExcerpt(e.target.value)}
+            style={{
+              width: '100%', background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
+              padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
+              boxSizing: 'border-box',
+            }}
+          />
         </div>
 
         {/* Toolbar */}
-        <div className="flex flex-wrap gap-2 mb-4 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
+        <div style={{
+          display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '4px',
+          background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
+          borderRadius: '12px 12px 0 0', padding: '12px 16px',
+        }}>
           {[
             { label: 'B', action: () => editor?.chain().focus().toggleBold().run(), active: editor?.isActive('bold') },
             { label: 'I', action: () => editor?.chain().focus().toggleItalic().run(), active: editor?.isActive('italic') },
@@ -205,7 +230,12 @@ export default function NewPost() {
             <button
               key={btn.label}
               onClick={btn.action}
-              className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${btn.active ? 'bg-[#6C63FF] text-white' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+              style={{
+                padding: '6px 12px', borderRadius: '8px', fontSize: '13px', fontWeight: '600',
+                cursor: 'pointer', border: 'none', transition: 'all 0.15s ease',
+                background: btn.active ? '#6C63FF' : 'rgba(255,255,255,0.05)',
+                color: btn.active ? '#fff' : '#9ca3af',
+              }}
             >
               {btn.label}
             </button>
@@ -213,7 +243,13 @@ export default function NewPost() {
         </div>
 
         {/* Editor */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl px-6 py-5">
+        <div style={{
+          background: 'rgba(255,255,255,0.03)',
+          border: '1px solid rgba(255,255,255,0.08)',
+          borderTop: 'none',
+          borderRadius: '0 0 12px 12px',
+          padding: '20px 24px',
+        }}>
           <EditorContent editor={editor} />
         </div>
 
