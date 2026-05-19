@@ -21,6 +21,8 @@ export default function EditPost({ params }) {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
   const [htmlMode, setHtmlMode] = useState(false)
+  const [notifying, setNotifying] = useState(false)
+const [notifyMessage, setNotifyMessage] = useState('')
   const router = useRouter()
 
   const editor = useEditor({
@@ -71,6 +73,26 @@ export default function EditPost({ params }) {
       })
     }
   }, [editor])
+
+  async function handleNotify() {
+  if (!published) return
+  setNotifying(true)
+  setNotifyMessage('')
+  const token = localStorage.getItem('admin_token')
+
+  const res = await fetch('/api/notify-subscribers', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-admin-token': token,
+    },
+    body: JSON.stringify({ title, excerpt, slug }),
+  })
+
+  const data = await res.json()
+  setNotifyMessage(data.message || data.error || 'Done.')
+  setNotifying(false)
+}
 
   async function handleSave(publish) {
     if (!title) { setMessage('Title is required.'); return }
@@ -138,12 +160,25 @@ export default function EditPost({ params }) {
                 Publish
               </button>
             )}
+            {published && (
+  <button onClick={handleNotify} disabled={notifying} style={{
+    background: '#0e7490', color: '#fff', border: 'none',
+    padding: '10px 20px', borderRadius: '12px',
+    cursor: 'pointer', fontSize: '14px', fontWeight: '600',
+  }}>
+    {notifying ? 'Notifying...' : '📬 Notify Subscribers'}
+  </button>
+)}
           </div>
         </div>
 
         {message && (
           <p style={{ color: '#f87171', fontSize: '14px', marginBottom: '16px' }}>{message}</p>
         )}
+
+        {notifyMessage && (
+  <p style={{ color: '#4ade80', fontSize: '14px', marginBottom: '16px' }}>{notifyMessage}</p>
+)}
 
         {/* Title */}
         <input
