@@ -48,6 +48,72 @@ export async function POST(request) {
     }
 
     const isAppUser = tag === 'app-user'
+    const footer = `
+      <div style="border-top:1px solid #eeeeee;padding:24px 32px;background:#f9f9f9;">
+        <table style="width:100%;border-collapse:collapse;">
+          <tr>
+            <td style="vertical-align:middle;">
+              <span style="font-size:14px;font-weight:700;color:#6C63FF;letter-spacing:0.05em;">SAVR</span>
+              <p style="font-size:12px;color:#999999;margin:4px 0 0;">Your Money, In Control.</p>
+            </td>
+            <td style="text-align:right;vertical-align:middle;">
+              <a href="https://savrappindia.vercel.app" style="font-size:12px;color:#6C63FF;text-decoration:none;">savrappindia.vercel.app</a>
+            </td>
+          </tr>
+        </table>
+        <p style="font-size:11px;color:#bbbbbb;margin:16px 0 0;">
+          ${isAppUser
+            ? 'You are receiving this because you signed up for Savr on Android.'
+            : 'You are receiving this because you subscribed at savrappindia.vercel.app.'
+          }
+          &nbsp;|&nbsp; &copy; 2026 Wary Dev. All rights reserved.
+        </p>
+      </div>
+    `
+
+    const newsletterHtml = `
+      <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
+        <div style="background:#6C63FF;padding:24px 32px;">
+          <span style="font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">SAVR</span>
+        </div>
+        <div style="padding:40px 32px;">
+          <h1 style="font-size:24px;font-weight:700;color:#111111;margin:0 0 16px;">You are on the list.</h1>
+          <p style="font-size:15px;line-height:1.7;color:#555555;margin:0 0 12px;">
+            Thanks for subscribing. You will hear from us when there is something worth reading — app updates, money tips, and the occasional behind-the-scenes post from building Savr.
+          </p>
+          <p style="font-size:15px;line-height:1.7;color:#555555;margin:0 0 32px;">
+            We keep it minimal. No spam, ever.
+          </p>
+          <a href="https://play.google.com/store/apps/details?id=com.saver.savr"
+            style="display:inline-block;background:#6C63FF;color:#ffffff;text-decoration:none;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;">
+            Download Savr — Free
+          </a>
+        </div>
+        ${footer}
+      </div>
+    `
+
+    const appHtml = `
+      <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:520px;margin:0 auto;background:#ffffff;">
+        <div style="background:#6C63FF;padding:24px 32px;">
+          <span style="font-size:20px;font-weight:700;color:#ffffff;letter-spacing:0.05em;">SAVR</span>
+        </div>
+        <div style="padding:40px 32px;">
+          <h1 style="font-size:24px;font-weight:700;color:#111111;margin:0 0 16px;">Welcome to Savr.</h1>
+          <p style="font-size:15px;line-height:1.7;color:#555555;margin:0 0 12px;">
+            Your finances are now offline-first, private, and in your control. Everything stays on your device — no servers storing your transactions, no loan upsells, no data sharing.
+          </p>
+          <p style="font-size:15px;line-height:1.7;color:#555555;margin:0 0 32px;">
+            Start by adding your first expense. It takes less than 10 seconds.
+          </p>
+          <a href="https://play.google.com/store/apps/details?id=com.saver.savr"
+            style="display:inline-block;background:#6C63FF;color:#ffffff;text-decoration:none;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;">
+            Open Savr
+          </a>
+        </div>
+        ${footer}
+      </div>
+    `
 
     await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
@@ -59,9 +125,7 @@ export async function POST(request) {
         sender: { name: 'Savr', email: '007mwnswrangwary@gmail.com' },
         to: [{ email: normalised }],
         subject: isAppUser ? 'Welcome to Savr.' : 'You are on the list.',
-        htmlContent: isAppUser
-          ? '<div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:40px 24px;color:#111"><p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6C63FF;margin:0 0 24px">Savr</p><h1 style="font-size:22px;font-weight:700;margin:0 0 16px">Welcome to Savr.</h1><p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 16px">Your finances are now offline-first, private, and in your control.</p><p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 32px">No loan upsells. No data sharing. Just you and your money.</p><a href="https://play.google.com/store/apps/details?id=com.saver.savr" style="display:inline-block;background:#6C63FF;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600">Open Savr</a><p style="font-size:12px;color:#999;margin:40px 0 0">You are receiving this because you signed up for Savr.</p></div>'
-          : '<div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:40px 24px;color:#111"><p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#6C63FF;margin:0 0 24px">Savr</p><h1 style="font-size:22px;font-weight:700;margin:0 0 16px">You are on the list.</h1><p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 16px">You will hear from us when there is something worth reading — app updates, money tips, and the occasional behind-the-scenes post.</p><p style="font-size:15px;line-height:1.7;color:#444;margin:0 0 32px">In the meantime, download Savr and take control of your finances.</p><a href="https://play.google.com/store/apps/details?id=com.saver.savr" style="display:inline-block;background:#6C63FF;color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600">Download Savr</a><p style="font-size:12px;color:#999;margin:40px 0 0">You are receiving this because you subscribed at savrappindia.vercel.app.</p></div>',
+        htmlContent: isAppUser ? appHtml : newsletterHtml,
       }),
     })
 
