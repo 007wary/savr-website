@@ -57,13 +57,7 @@ export default function DeleteAccount() {
                 Send an email from your registered Gmail address with subject line &quot;Delete My Savr Account&quot;:
               </p>
               
-                href="mailto:007mwnswrangwary@gmail.com?subject=Delete My Savr Account&body=Please delete my Savr account and all associated data. My registered email is: [your email]"
-                style={{
-                  display: 'inline-block', background: '#6C63FF', color: '#ffffff',
-                  textDecoration: 'none', padding: '13px 28px', borderRadius: '10px',
-                  fontSize: '15px', fontWeight: '600',
-                }}
-              >
+                <a href="mailto:007mwnswrangwary@gmail.com?subject=Delete My Savr Account&body=Please delete my Savr account and all associated data. My registered email is: [your email]" style={{ display: 'inline-block', background: '#6C63FF', color: '#ffffff', textDecoration: 'none', padding: '13px 28px', borderRadius: '10px', fontSize: '15px', fontWeight: '600' }}>
                 Send Deletion Request
               </a>
             </div>

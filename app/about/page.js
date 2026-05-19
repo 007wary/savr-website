@@ -101,15 +101,7 @@ export default function About() {
               <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#ffffff', marginBottom: '8px' }}>Download Savr Free</h2>
               <p style={{ fontSize: '15px', color: '#9ca3af', marginBottom: '24px' }}>Available on Google Play — no subscription, no hidden fees</p>
               
-                href="https://play.google.com/store/apps/details?id=com.saver.savr"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-block', background: '#6C63FF', color: '#ffffff',
-                  textDecoration: 'none', padding: '13px 28px', borderRadius: '10px',
-                  fontSize: '15px', fontWeight: '600',
-                }}
-              >
+                <a href="https://play.google.com/store/apps/details?id=com.saver.savr" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', background: '#6C63FF', color: '#ffffff', textDecoration: 'none', padding: '13px 28px', borderRadius: '10px', fontSize: '15px', fontWeight: '600' }}>
                 Download on Google Play
               </a>
             </div>
