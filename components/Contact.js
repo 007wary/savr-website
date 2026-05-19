@@ -86,12 +86,19 @@ export default function Contact() {
           </div>
         ) : (
           <>
-            <div style={{
-              display: 'flex',
-              gap: '10px',
-              maxWidth: '420px',
-              margin: '0 auto',
-            }}>
+            <style>{`
+  @media (max-width: 480px) {
+    .newsletter-form { flex-direction: column !important; }
+    .newsletter-form input { width: 100% !important; }
+    .newsletter-form button { width: 100% !important; }
+  }
+`}</style>
+<div className="newsletter-form" style={{
+  display: 'flex',
+  gap: '10px',
+  maxWidth: '420px',
+  margin: '0 auto',
+}}>
               <input
                 type="email"
                 value={email}
