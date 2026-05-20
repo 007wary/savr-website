@@ -113,16 +113,31 @@ export function StoryCard({ post }) {
   return (
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <article
-        style={{ display: 'flex', justifyContent: 'space-between', gap: '16px', paddingBottom: '24px', borderBottom: '1px solid var(--border)', cursor: 'pointer' }}
-        onMouseEnter={e => e.currentTarget.querySelector('.story-title').style.color = 'var(--accent)'}
-        onMouseLeave={e => e.currentTarget.querySelector('.story-title').style.color = 'var(--text-primary)'}
+        style={{
+          cursor: 'pointer',
+          border: '1px solid var(--border)',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          background: 'var(--bg-surface)',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.transform = 'translateY(-4px)'
+          e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.12)'
+          e.currentTarget.style.borderColor = 'var(--color-primary-border)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.borderColor = 'var(--border)'
+        }}
       >
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginBottom: '6px' }}>
-            {formatDate(post.created_at)}
-            {post.category && <span style={{ color: 'var(--accent)', fontWeight: '700', marginLeft: '8px', textTransform: 'uppercase', fontSize: '11px', letterSpacing: '0.06em' }}>{post.category}</span>}
+        <CoverImage src={post.cover_image} alt={post.title} height="160px" borderRadius="0px" />
+        <div style={{ padding: '20px' }}>
+          <p style={{ color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
+            {post.category || 'General'}
           </p>
-          <h3 className="story-title" style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4', marginBottom: '8px', transition: 'color 0.2s ease', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+          <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4', marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
             {post.title}
           </h3>
           {post.excerpt && (
@@ -130,8 +145,10 @@ export function StoryCard({ post }) {
               {post.excerpt}
             </p>
           )}
+          <p style={{ color: 'var(--text-subtle)', fontSize: '12px', marginTop: '12px' }}>
+            {formatDate(post.created_at)}
+          </p>
         </div>
-        <CoverImage src={post.cover_image} alt={post.title} width="120px" height="80px" borderRadius="10px" />
       </article>
     </Link>
   )
@@ -185,16 +202,31 @@ export default function BlogCard({ post }) {
   return (
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <article
-        style={{ cursor: 'pointer' }}
-        onMouseEnter={e => e.currentTarget.querySelector('.grid-title').style.color = 'var(--accent)'}
-        onMouseLeave={e => e.currentTarget.querySelector('.grid-title').style.color = 'var(--text-primary)'}
+        style={{
+          cursor: 'pointer',
+          border: '1px solid var(--border)',
+          borderRadius: '16px',
+          overflow: 'hidden',
+          background: 'var(--bg-surface)',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.transform = 'translateY(-4px)'
+          e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.12)'
+          e.currentTarget.style.borderColor = 'var(--color-primary-border)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.borderColor = 'var(--border)'
+        }}
       >
-        <CoverImage src={post.cover_image} alt={post.title} height="180px" borderRadius="12px" />
-        <div style={{ paddingTop: '16px' }}>
-          <p style={{ color: 'var(--accent)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
+        <CoverImage src={post.cover_image} alt={post.title} height="180px" borderRadius="0px" />
+        <div style={{ padding: '20px' }}>
+          <p style={{ color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
             {post.category || 'General'}
           </p>
-          <h3 className="grid-title" style={{ fontSize: '17px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4', marginBottom: '10px', transition: 'color 0.2s ease', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+          <h3 style={{ fontSize: '17px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4', marginBottom: '10px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
             {post.title}
           </h3>
           {post.excerpt && (
