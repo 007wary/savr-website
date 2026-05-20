@@ -19,6 +19,7 @@ export default function EditPost({ params }) {
   const [published, setPublished] = useState(false)
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [postContent, setPostContent] = useState('')
   const [message, setMessage] = useState('')
   const [htmlMode, setHtmlMode] = useState(false)
   const [notifying, setNotifying] = useState(false)
@@ -64,17 +65,18 @@ const [notifyMessage, setNotifyMessage] = useState('')
     setCategory(post.category || '')
     setAuthor(post.author || '')
     setPublished(post.published)
+    setPostContent(post.content || '')
     postRef.current = post
     setLoading(false)
     return post
   }
 
   useEffect(() => {
-    if (editor && postRef.current && !contentLoaded.current) {
-      editor.commands.setContent(postRef.current.content || '')
+    if (editor && postContent && !contentLoaded.current) {
+      editor.commands.setContent(postContent)
       contentLoaded.current = true
     }
-  }, [editor])
+  }, [editor, postContent])
 
   async function handleNotify() {
   if (!published) return
