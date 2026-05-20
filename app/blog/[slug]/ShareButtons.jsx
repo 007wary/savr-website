@@ -33,8 +33,9 @@ export default function ShareButtons({ title, slug }) {
   }
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px', marginBottom: '40px' }}>
-      <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-subtle)' }}>Share</span>
+    <div style={{ marginBottom: '40px' }}>
+      <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-subtle)', display: 'block', marginBottom: '10px' }}>Share</span>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
 
       <button style={btnStyle} onClick={() => openLink(`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encoded}`)}>
         X / Twitter
@@ -55,6 +56,7 @@ export default function ShareButtons({ title, slug }) {
       }}>
         {copied ? 'Copied!' : 'Copy Link'}
       </button>
+    </div>
     </div>
   )
 }
