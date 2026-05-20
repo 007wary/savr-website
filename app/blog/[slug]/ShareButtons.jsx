@@ -28,21 +28,21 @@ export default function ShareButtons({ title, slug }) {
 
       <a href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encoded}`}
         target="_blank" rel="noopener noreferrer" style={btnStyle}>
-        𝕏 Twitter
+        X / Twitter
       </a>
 
       <a href={`https://wa.me/?text=${encodedTitle}%20${encoded}`}
         target="_blank" rel="noopener noreferrer" style={btnStyle}>
-        💬 WhatsApp
+        WhatsApp
       </a>
 
       <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`}
         target="_blank" rel="noopener noreferrer" style={btnStyle}>
-        in LinkedIn
+        LinkedIn
       </a>
 
       <button onClick={copyLink} style={{ ...btnStyle, color: copied ? 'var(--color-primary)' : 'var(--text-muted)', borderColor: copied ? 'var(--color-primary-border)' : 'var(--border)' }}>
-        {copied ? '✓ Copied!' : '🔗 Copy Link'}
+        {copied ? 'Copied!' : 'Copy Link'}
       </button>
     </div>
   )
