@@ -35,10 +35,23 @@ export const metadata = {
   },
 }
 
+export const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MobileApplication',
+  name: 'Savr',
+  operatingSystem: 'Android',
+  applicationCategory: 'FinanceApplication',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
+  description: 'Savr is an offline-first expense tracker built for India. Track expenses, set budgets, and back up automatically.',
+  author: { '@type': 'Person', name: 'Mwnswrang Wary' },
+  url: 'https://play.google.com/store/apps/details?id=com.saver.savr',
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.variable}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Navbar />
         {children}
       </body>
