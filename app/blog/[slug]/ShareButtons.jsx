@@ -8,6 +8,16 @@ export default function ShareButtons({ title, slug }) {
   const encoded = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
 
+  function openLink(href) {
+    const a = document.createElement('a')
+    a.href = href
+    a.target = '_blank'
+    a.rel = 'noopener noreferrer'
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+
   function copyLink() {
     navigator.clipboard.writeText(url)
     setCopied(true)
@@ -19,27 +29,24 @@ export default function ShareButtons({ title, slug }) {
     padding: '8px 14px', borderRadius: '8px', fontSize: '13px', fontWeight: '600',
     cursor: 'pointer', border: '1px solid var(--border)',
     background: 'var(--bg-surface)', color: 'var(--text-muted)',
-    textDecoration: 'none', lineHeight: '1',
+    lineHeight: '1',
   }
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px', marginBottom: '40px' }}>
       <span style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-subtle)' }}>Share</span>
 
-      <a href={`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encoded}`}
-        target="_blank" rel="noopener noreferrer" style={btnStyle}>
+      <button style={btnStyle} onClick={() => openLink(`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encoded}`)}>
         X / Twitter
-      </a>
+      </button>
 
-      <a href={`https://wa.me/?text=${encodedTitle}%20${encoded}`}
-        target="_blank" rel="noopener noreferrer" style={btnStyle}>
+      <button style={btnStyle} onClick={() => openLink(`https://api.whatsapp.com/send?text=${encodedTitle}%20${encoded}`)}>
         WhatsApp
-      </a>
+      </button>
 
-      <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`}
-        target="_blank" rel="noopener noreferrer" style={btnStyle}>
+      <button style={btnStyle} onClick={() => openLink(`https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`)}>
         LinkedIn
-      </a>
+      </button>
 
       <button onClick={copyLink} style={{
         ...btnStyle,
