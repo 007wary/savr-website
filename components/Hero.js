@@ -45,8 +45,8 @@ export default function Hero() {
             fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: '800',
             lineHeight: '1.1', marginBottom: '24px', letterSpacing: '-1.5px',
           }}>
-            Your Money,{' '}
-            <span className="gradient-text">In Control.</span>
+            Free Expense Tracker{' '}
+            <span className="gradient-text">Built for India.</span>
           </h1>
 
           <p style={{

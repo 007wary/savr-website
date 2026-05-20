@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import Features from '@/components/Features'
 import WhySavr from '@/components/WhySavr'
@@ -10,7 +9,6 @@ import Footer from '@/components/Footer'
 export default function Home() {
   return (
     <main>
-      <Navbar />
       <Hero />
       <Features />
       <WhySavr />
