@@ -112,9 +112,9 @@ export default async function PostPage({ params }) {
         </div>
 
         {post.cover_image && (
-          <div style={{ width: '100%', height: '400px', borderRadius: '16px', overflow: 'hidden', marginBottom: '48px' }}>
-            <img src={post.cover_image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-          </div>
+          <div style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', marginBottom: '48px' }}>
+  <img src={post.cover_image} alt={post.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+</div>
         )}
 
         {post.excerpt && (
