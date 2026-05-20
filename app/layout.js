@@ -21,11 +21,13 @@ export const metadata = {
     siteName: 'Savr',
     locale: 'en_IN',
     type: 'website',
+    images: [{ url: 'https://savrappindia.vercel.app/og-image.svg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Savr – Your Money, In Control',
+    title: 'Savr – Free Expense Tracker Built for India',
     description: 'Offline-first expense tracker built for India.',
+    images: ['https://savrappindia.vercel.app/og-image.svg'],
   },
   robots: {
     index: true,
