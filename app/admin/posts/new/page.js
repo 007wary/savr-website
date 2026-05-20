@@ -19,7 +19,7 @@ export default function NewPost() {
   const [category, setCategory] = useState('')
   const [author, setAuthor] = useState('Wary Dev')
   const [saving, setSaving] = useState(false)
-  const [htmlMode, setHtmlMode] = useState(false)
+  const [, forceUpdate] = useState(0)
   const [htmlContent, setHtmlContent] = useState('')
   const htmlModeRef = useRef(false)
   const [message, setMessage] = useState('')
@@ -245,15 +245,14 @@ export default function NewPost() {
           ))}
           <button
             onClick={() => {
-              if (!htmlMode) {
+              if (!htmlModeRef.current) {
                 setHtmlContent(editor?.getHTML() || '')
                 htmlModeRef.current = true
-                setHtmlMode(true)
               } else {
                 editor?.commands.setContent(htmlContent)
                 htmlModeRef.current = false
-                setHtmlMode(false)
               }
+              forceUpdate(n => n + 1)
             }}
             style={{
               marginLeft: 'auto', padding: '6px 12px', borderRadius: '8px', fontSize: '13px', fontWeight: '600',
@@ -279,14 +278,14 @@ export default function NewPost() {
             value={htmlContent}
             onChange={e => setHtmlContent(e.target.value)}
             style={{
-              display: htmlMode ? 'block' : 'none',
+              display: htmlModeRef.current ? 'block' : 'none',
               width: '100%', minHeight: '400px', background: 'transparent',
               border: 'none', outline: 'none', color: '#d1d5db',
               fontSize: '14px', lineHeight: '1.8', fontFamily: 'monospace',
               resize: 'vertical', boxSizing: 'border-box',
             }}
           />
-          <div style={{ display: htmlMode ? 'none' : 'block' }}>
+          <div style={{ display: htmlModeRef.current ? 'none' : 'block' }}>
             <EditorContent editor={editor} />
           </div>
         </div>

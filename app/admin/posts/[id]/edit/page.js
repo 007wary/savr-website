@@ -21,7 +21,7 @@ export default function EditPost({ params }) {
   const [loading, setLoading] = useState(true)
   const [postContent, setPostContent] = useState('')
   const [message, setMessage] = useState('')
-  const [htmlMode, setHtmlMode] = useState(false)
+  const [, forceUpdate] = useState(0)
   const [notifying, setNotifying] = useState(false)
   const postRef = useRef(null)
   const htmlModeRef = useRef(false)
@@ -316,24 +316,23 @@ const [notifyMessage, setNotifyMessage] = useState('')
           ))}
         <button
             onClick={() => {
-              if (!htmlMode) {
+              if (!htmlModeRef.current) {
                 setHtmlContent(editor?.getHTML() || '')
                 htmlModeRef.current = true
-                setHtmlMode(true)
               } else {
                 editor?.commands.setContent(htmlContent)
                 htmlModeRef.current = false
-                setHtmlMode(false)
               }
+              forceUpdate(n => n + 1)
             }}
             style={{
               marginLeft: 'auto', padding: '6px 14px', borderRadius: '8px',
               fontSize: '13px', fontWeight: '600', cursor: 'pointer', border: 'none',
-              background: htmlMode ? '#6C63FF' : 'rgba(255,255,255,0.05)',
-              color: htmlMode ? '#fff' : '#9ca3af',
+              background: htmlModeRef.current ? '#6C63FF' : 'rgba(255,255,255,0.05)',
+            color: htmlModeRef.current ? '#fff' : '#9ca3af',
             }}
           >
-            {htmlMode ? '← Visual' : '<> HTML'}
+            {htmlModeRef.current ? '← Visual' : '<> HTML'}
           </button>
         </div>
 
@@ -350,7 +349,7 @@ const [notifyMessage, setNotifyMessage] = useState('')
             value={htmlContent}
             onChange={e => setHtmlContent(e.target.value)}
             style={{
-              display: htmlMode ? 'block' : 'none',
+              display: htmlModeRef.current ? 'block' : 'none',
               width: '100%', minHeight: '400px', background: 'transparent',
               border: 'none', outline: 'none', color: '#d1d5db',
               fontSize: '14px', lineHeight: '1.8', fontFamily: 'monospace',
@@ -358,7 +357,7 @@ const [notifyMessage, setNotifyMessage] = useState('')
             }}
             placeholder="Write raw HTML here..."
           />
-          <div style={{ display: htmlMode ? 'none' : 'block' }}>
+          <div style={{ display: htmlModeRef.current ? 'none' : 'block' }}>
             <EditorContent editor={editor} />
           </div>
         </div>
