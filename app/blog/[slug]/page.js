@@ -172,7 +172,7 @@ export default async function PostPage({ params }) {
 
       {/* Related Articles */}
       {relatedPosts.length > 0 && (
-        <div style={{ borderTop: '1px solid var(--border)', marginTop: '80px', paddingTop: '64px', paddingBottom: '80px', background: 'var(--bg-elevated)' }}>
+        <div style={{ borderTop: '1px solid var(--border)', marginTop: '80px', paddingTop: '64px', paddingBottom: '80px', background: 'var(--bg-primary)' }}>
           <div className="container" style={{ maxWidth: '780px' }}>
             <h2 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '32px' }}>
               Related Articles
