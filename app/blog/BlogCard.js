@@ -52,16 +52,31 @@ export function HeroMainCard({ post }) {
   return (
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block', flex: '1 1 55%' }}>
       <article
-        style={{ cursor: 'pointer', height: '100%' }}
-        onMouseEnter={e => e.currentTarget.querySelector('.hero-title').style.color = 'var(--accent)'}
-        onMouseLeave={e => e.currentTarget.querySelector('.hero-title').style.color = 'var(--text-primary)'}
+        style={{
+          cursor: 'pointer', height: '100%',
+          border: '1px solid var(--border)',
+          borderRadius: '16px',
+          background: 'var(--bg-surface)',
+          overflow: 'hidden',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.transform = 'translateY(-4px)'
+          e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.12)'
+          e.currentTarget.style.borderColor = 'var(--color-primary-border)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.borderColor = 'var(--border)'
+        }}
       >
-        <CoverImage src={post.cover_image} alt={post.title} height="280px" borderRadius="16px" />
-        <div style={{ paddingTop: '20px' }}>
-          <p style={{ color: 'var(--accent)', fontSize: '12px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '10px' }}>
+        <CoverImage src={post.cover_image} alt={post.title} height="280px" borderRadius="0px" />
+        <div style={{ padding: '20px' }}>
+          <p style={{ color: 'var(--color-primary)', fontSize: '12px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '10px' }}>
             {post.category || 'General'}
           </p>
-          <h2 className="hero-title" style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-primary)', lineHeight: '1.3', marginBottom: '12px', transition: 'color 0.2s ease' }}>
+          <h2 style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-primary)', lineHeight: '1.3', marginBottom: '12px' }}>
             {post.title}
           </h2>
           {post.excerpt && (
