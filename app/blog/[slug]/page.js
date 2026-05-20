@@ -117,7 +117,7 @@ export default async function PostPage({ params }) {
   const relatedPosts = await getRelatedPosts(slug, post.category)
 
   return (
-    <main style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '100px', paddingBottom: '80px' }}>
+    <main style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '100px', paddingBottom: '0' }}>
       <div className="container" style={{ maxWidth: '780px' }}>
 
         <Link href="/blog" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: 'var(--text-muted)', fontSize: '14px', textDecoration: 'none', marginBottom: '40px' }}>
