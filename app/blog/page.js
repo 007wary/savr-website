@@ -129,9 +129,6 @@ export default async function BlogPage() {
             }
           }
           @media (max-width: 580px) {
-            .blog-hero-side {
-              display: none;
-            }
             .blog-grid-3 {
               grid-template-columns: 1fr;
               gap: 24px;
