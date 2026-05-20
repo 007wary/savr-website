@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -22,6 +22,7 @@ export default function EditPost({ params }) {
   const [message, setMessage] = useState('')
   const [htmlMode, setHtmlMode] = useState(false)
   const [notifying, setNotifying] = useState(false)
+  const postRef = useRef(null)
 const [notifyMessage, setNotifyMessage] = useState('')
   const router = useRouter()
 
@@ -61,16 +62,14 @@ const [notifyMessage, setNotifyMessage] = useState('')
     setCategory(post.category || '')
     setAuthor(post.author || '')
     setPublished(post.published)
+    postRef.current = post
     setLoading(false)
     return post
   }
 
   useEffect(() => {
-    if (editor) {
-      const token = localStorage.getItem('admin_token')
-      fetchPost(token).then(post => {
-        if (post) editor.commands.setContent(post.content || '')
-      })
+    if (editor && postRef.current) {
+      editor.commands.setContent(postRef.current.content || '')
     }
   }, [editor])
 
@@ -338,7 +337,7 @@ const [notifyMessage, setNotifyMessage] = useState('')
           {htmlMode ? (
             <textarea
               id="html-editor"
-              defaultValue={editor?.getHTML()}
+              defaultValue={postRef.current?.content || editor?.getHTML()}
               style={{
                 width: '100%', minHeight: '400px', background: 'transparent',
                 border: 'none', outline: 'none', color: '#d1d5db',
