@@ -35,6 +35,40 @@ function Avatar({ src, name }) {
   )
 }
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params
+  const { data: post } = await supabase
+    .from('posts')
+    .select('title, excerpt, cover_image, author')
+    .eq('slug', slug)
+    .eq('published', true)
+    .single()
+
+  if (!post) return {}
+
+  return {
+    title: `${post.title} | Savr Blog`,
+    description: post.excerpt || 'Read the latest from the Savr team.',
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || '',
+      url: `https://savrappindia.vercel.app/blog/${slug}`,
+      siteName: 'Savr',
+      images: post.cover_image ? [{ url: post.cover_image, width: 800, height: 420 }] : [],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt || '',
+      images: post.cover_image ? [post.cover_image] : [],
+    },
+    alternates: {
+      canonical: `https://savrappindia.vercel.app/blog/${slug}`,
+    },
+  }
+}
+
 export default async function PostPage({ params }) {
   const { slug } = await params
 
@@ -89,7 +123,22 @@ export default async function PostPage({ params }) {
           </p>
         )}
 
+        <style>{`
+          .post-content p { margin-bottom: 24px; }
+          .post-content h2 { font-size: 28px; font-weight: 800; color: var(--text-primary); margin: 48px 0 16px; line-height: 1.3; }
+          .post-content h3 { font-size: 22px; font-weight: 700; color: var(--text-primary); margin: 36px 0 12px; line-height: 1.3; }
+          .post-content ul, .post-content ol { margin: 0 0 24px 24px; }
+          .post-content li { margin-bottom: 10px; }
+          .post-content strong { color: var(--text-primary); font-weight: 700; }
+          .post-content a { color: #6C63FF; text-decoration: underline; }
+          .post-content a:hover { color: #A78BFA; }
+          .post-content figure { margin: 0 0 40px 0; border-radius: 12px; overflow: hidden; }
+          .post-content blockquote { border-left: 3px solid #6C63FF; padding-left: 20px; margin: 32px 0; color: var(--text-muted); font-style: italic; }
+          .post-content code { background: rgba(255,255,255,0.08); padding: 2px 8px; border-radius: 6px; font-size: 14px; font-family: monospace; }
+          .post-content pre { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; overflow-x: auto; margin-bottom: 24px; }
+        `}</style>
         <div
+          className="post-content"
           style={{ color: 'var(--text-muted)', fontSize: '17px', lineHeight: '1.9' }}
           dangerouslySetInnerHTML={{ __html: post.content }}
         />
