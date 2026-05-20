@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" style="background:#0D0B1E;border-radius:16px;">
+  <title>Best expense tracker apps in India 2026 — Savr vs Walnut vs Axio vs Money Manager</title>
+
+  <!-- Background glow -->
+  <defs>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#6C63FF" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#0D0B1E" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="280" fill="url(#glow2)"/>
+
+  <!-- Grid lines -->
+  <line x1="0" y1="70" x2="600" y2="70" stroke="#ffffff06" stroke-width="1"/>
+  <line x1="0" y1="140" x2="600" y2="140" stroke="#ffffff06" stroke-width="1"/>
+  <line x1="0" y1="210" x2="600" y2="210" stroke="#ffffff06" stroke-width="1"/>
+  <line x1="150" y1="0" x2="150" y2="280" stroke="#ffffff06" stroke-width="1"/>
+  <line x1="300" y1="0" x2="300" y2="280" stroke="#ffffff06" stroke-width="1"/>
+  <line x1="450" y1="0" x2="450" y2="280" stroke="#ffffff06" stroke-width="1"/>
+
+  <!-- Table header -->
+  <rect x="30" y="50" width="540" height="32" rx="6" fill="#1A1730"/>
+  <text x="46" y="71" font-size="10" fill="#6C63FF" font-family="system-ui" font-weight="700">FEATURE</text>
+  <text x="180" y="71" font-size="10" fill="#A78BFA" font-family="system-ui" font-weight="700">SAVR</text>
+  <text x="280" y="71" font-size="10" fill="#888" font-family="system-ui" font-weight="700">WALNUT</text>
+  <text x="380" y="71" font-size="10" fill="#888" font-family="system-ui" font-weight="700">AXIO</text>
+  <text x="470" y="71" font-size="10" fill="#888" font-family="system-ui" font-weight="700">MONEY MGR</text>
+
+  <!-- Row 1 -->
+  <rect x="30" y="86" width="540" height="28" rx="4" fill="#13112A"/>
+  <text x="46" y="104" font-size="9" fill="#aaa" font-family="system-ui">Works Offline</text>
+  <text x="180" y="104" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+  <text x="280" y="104" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="380" y="104" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="470" y="104" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+
+  <!-- Row 2 -->
+  <rect x="30" y="118" width="540" height="28" rx="4" fill="#1A1730"/>
+  <text x="46" y="136" font-size="9" fill="#aaa" font-family="system-ui">No Loan Upsells</text>
+  <text x="180" y="136" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+  <text x="280" y="136" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="380" y="136" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="470" y="136" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+
+  <!-- Row 3 -->
+  <rect x="30" y="150" width="540" height="28" rx="4" fill="#13112A"/>
+  <text x="46" y="168" font-size="9" fill="#aaa" font-family="system-ui">Data Stays on Device</text>
+  <text x="180" y="168" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+  <text x="280" y="168" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="380" y="168" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="470" y="168" font-size="13" fill="#FBBF24" font-family="system-ui">~</text>
+
+  <!-- Row 4 -->
+  <rect x="30" y="182" width="540" height="28" rx="4" fill="#1A1730"/>
+  <text x="46" y="200" font-size="9" fill="#aaa" font-family="system-ui">Completely Free</text>
+  <text x="180" y="200" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+  <text x="280" y="200" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+  <text x="380" y="200" font-size="13" fill="#FBBF24" font-family="system-ui">~</text>
+  <text x="470" y="200" font-size="13" fill="#FBBF24" font-family="system-ui">~</text>
+
+  <!-- Row 5 -->
+  <rect x="30" y="214" width="540" height="28" rx="4" fill="#13112A"/>
+  <text x="46" y="232" font-size="9" fill="#aaa" font-family="system-ui">Google Drive Backup</text>
+  <text x="180" y="232" font-size="13" fill="#34D399" font-family="system-ui">✓</text>
+  <text x="280" y="232" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="380" y="232" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+  <text x="470" y="232" font-size="13" fill="#FF4444" font-family="system-ui">✗</text>
+
+  <!-- Top label -->
+  <text x="300" y="32" text-anchor="middle" fill="#6b7280" font-size="12" font-family="system-ui">Expense Tracker Comparison — India 2026</text>
+
+  <!-- Savr highlight column -->
+  <rect x="165" y="50" width="80" height="192" rx="4" fill="#6C63FF" fill-opacity="0.06" stroke="#6C63FF" stroke-width="1" stroke-opacity="0.3"/>
+</svg>
