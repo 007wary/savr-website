@@ -177,7 +177,7 @@ export default async function PostPage({ params }) {
             <h2 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '32px' }}>
               Related Articles
             </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '24px', alignItems: 'start' }}>
               {relatedPosts.map(p => (
                 <RelatedCard key={p.id} post={p} />
               ))}

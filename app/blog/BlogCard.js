@@ -185,10 +185,11 @@ export function StoryCard({ post }) {
 // Related posts card
 export function RelatedCard({ post }) {
   return (
-    <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+    <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
       <article
         style={{
           cursor: 'pointer',
+          height: '100%',
           border: '1px solid var(--border)',
           borderRadius: '16px',
           overflow: 'hidden',
