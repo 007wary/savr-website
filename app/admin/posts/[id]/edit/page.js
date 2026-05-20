@@ -27,6 +27,7 @@ export default function EditPost({ params }) {
   const htmlModeRef = useRef(false)
   const contentLoaded = useRef(false)
 const [notifyMessage, setNotifyMessage] = useState('')
+  const [htmlContent, setHtmlContent] = useState('')
   const router = useRouter()
 
   const editor = useEditor({
@@ -104,9 +105,8 @@ const [notifyMessage, setNotifyMessage] = useState('')
     setMessage('')
     const token = localStorage.getItem('admin_token')
 
-    const textarea = document.getElementById('html-editor')
-    const content = htmlModeRef.current && textarea
-      ? textarea.value
+    const content = htmlModeRef.current
+      ? htmlContent
       : editor?.getHTML() || ''
 
     const res = await fetch('/api/admin', {
@@ -317,10 +317,11 @@ const [notifyMessage, setNotifyMessage] = useState('')
         <button
             onClick={() => {
               if (!htmlMode) {
+                setHtmlContent(editor?.getHTML() || '')
                 htmlModeRef.current = true
                 setHtmlMode(true)
               } else {
-                editor?.commands.setContent(document.getElementById('html-editor').value)
+                editor?.commands.setContent(htmlContent)
                 htmlModeRef.current = false
                 setHtmlMode(false)
               }
@@ -347,7 +348,8 @@ const [notifyMessage, setNotifyMessage] = useState('')
           {htmlMode ? (
             <textarea
               id="html-editor"
-              defaultValue={postRef.current?.content || editor?.getHTML()}
+              value={htmlContent}
+              onChange={e => setHtmlContent(e.target.value)}
               style={{
                 width: '100%', minHeight: '400px', background: 'transparent',
                 border: 'none', outline: 'none', color: '#d1d5db',

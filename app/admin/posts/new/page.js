@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -19,7 +19,9 @@ export default function NewPost() {
   const [category, setCategory] = useState('')
   const [author, setAuthor] = useState('Wary Dev')
   const [saving, setSaving] = useState(false)
-const [htmlMode, setHtmlMode] = useState(false)
+  const [htmlMode, setHtmlMode] = useState(false)
+  const [htmlContent, setHtmlContent] = useState('')
+  const htmlModeRef = useRef(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
 
@@ -68,7 +70,7 @@ const [htmlMode, setHtmlMode] = useState(false)
         title,
         slug: slug || slugify(title),
         excerpt,
-        content: editor.getHTML(),
+        content: htmlModeRef.current ? htmlContent : editor?.getHTML() || '',
         cover_image: coverImage,
         category,
         author,
@@ -244,9 +246,12 @@ const [htmlMode, setHtmlMode] = useState(false)
           <button
             onClick={() => {
               if (!htmlMode) {
+                setHtmlContent(editor?.getHTML() || '')
+                htmlModeRef.current = true
                 setHtmlMode(true)
               } else {
-                editor?.commands.setContent(document.getElementById('html-textarea').value)
+                editor?.commands.setContent(htmlContent)
+                htmlModeRef.current = false
                 setHtmlMode(false)
               }
             }}
@@ -272,7 +277,8 @@ const [htmlMode, setHtmlMode] = useState(false)
           {htmlMode ? (
             <textarea
               id="html-textarea"
-              defaultValue={editor?.getHTML()}
+              value={htmlContent}
+              onChange={e => setHtmlContent(e.target.value)}
               style={{
                 width: '100%', minHeight: '400px', background: 'transparent',
                 border: 'none', outline: 'none', color: '#d1d5db',
