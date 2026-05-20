@@ -26,7 +26,7 @@ export default function Navbar() {
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
       transition: 'all 0.3s ease',
-      background: scrolled ? 'rgba(10, 10, 15, 0.9)' : 'transparent',
+      background: scrolled ? 'var(--bg-primary)' : 'transparent',
       backdropFilter: scrolled ? 'blur(20px)' : 'none',
       borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
     }}>

@@ -4,24 +4,20 @@ import { useState } from 'react'
 
 export default function Contact() {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState('idle') // idle | loading | success | error
+  const [status, setStatus] = useState('idle')
   const [message, setMessage] = useState('')
 
   async function handleSubscribe() {
     if (!email.trim()) return
-
     setStatus('loading')
     setMessage('')
-
     try {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, tag: 'newsletter' }),
       })
-
       const data = await res.json()
-
       if (res.ok) {
         setStatus('success')
         setEmail('')
@@ -40,7 +36,7 @@ export default function Contact() {
   }
 
   return (
-    <section style={{ background: '#0A0A0F', padding: '80px 24px' }}>
+    <section style={{ background: 'var(--bg-elevated)', padding: '80px 24px' }}>
       <div style={{ maxWidth: '540px', margin: '0 auto', textAlign: 'center' }}>
 
         <p style={{
@@ -48,7 +44,7 @@ export default function Contact() {
           fontWeight: '600',
           letterSpacing: '0.1em',
           textTransform: 'uppercase',
-          color: '#6C63FF',
+          color: 'var(--color-primary)',
           marginBottom: '16px',
         }}>
           Newsletter
@@ -57,7 +53,7 @@ export default function Contact() {
         <h2 style={{
           fontSize: '28px',
           fontWeight: '700',
-          color: '#ffffff',
+          color: 'var(--text-primary)',
           marginBottom: '12px',
           lineHeight: '1.3',
         }}>
@@ -66,7 +62,7 @@ export default function Contact() {
 
         <p style={{
           fontSize: '16px',
-          color: '#888888',
+          color: 'var(--text-muted)',
           marginBottom: '36px',
           lineHeight: '1.6',
         }}>
@@ -76,8 +72,8 @@ export default function Contact() {
         {status === 'success' ? (
           <div style={{
             padding: '16px 24px',
-            background: '#0f1a0f',
-            border: '1px solid #1a3a1a',
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border)',
             borderRadius: '10px',
             color: '#4ade80',
             fontSize: '15px',
@@ -87,18 +83,18 @@ export default function Contact() {
         ) : (
           <>
             <style>{`
-  @media (max-width: 480px) {
-    .newsletter-form { flex-direction: column !important; }
-    .newsletter-form input { width: 100% !important; }
-    .newsletter-form button { width: 100% !important; }
-  }
-`}</style>
-<div className="newsletter-form" style={{
-  display: 'flex',
-  gap: '10px',
-  maxWidth: '420px',
-  margin: '0 auto',
-}}>
+              @media (max-width: 480px) {
+                .newsletter-form { flex-direction: column !important; }
+                .newsletter-form input { width: 100% !important; }
+                .newsletter-form button { width: 100% !important; }
+              }
+            `}</style>
+            <div className="newsletter-form" style={{
+              display: 'flex',
+              gap: '10px',
+              maxWidth: '420px',
+              margin: '0 auto',
+            }}>
               <input
                 type="email"
                 value={email}
@@ -109,10 +105,10 @@ export default function Contact() {
                 style={{
                   flex: 1,
                   padding: '12px 16px',
-                  background: '#111118',
-                  border: '1px solid #222230',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border)',
                   borderRadius: '8px',
-                  color: '#ffffff',
+                  color: 'var(--text-primary)',
                   fontSize: '15px',
                   outline: 'none',
                   opacity: status === 'loading' ? 0.6 : 1,
@@ -123,7 +119,7 @@ export default function Contact() {
                 disabled={status === 'loading' || !email.trim()}
                 style={{
                   padding: '12px 22px',
-                  background: status === 'loading' ? '#4a44cc' : '#6C63FF',
+                  background: status === 'loading' ? '#4a44cc' : 'var(--color-primary)',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '8px',
@@ -139,11 +135,7 @@ export default function Contact() {
             </div>
 
             {status === 'error' && (
-              <p style={{
-                marginTop: '12px',
-                fontSize: '14px',
-                color: '#f87171',
-              }}>
+              <p style={{ marginTop: '12px', fontSize: '14px', color: '#f87171' }}>
                 {message}
               </p>
             )}
