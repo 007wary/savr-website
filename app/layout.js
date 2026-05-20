@@ -9,13 +9,13 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: 'Savr – Your Money, In Control',
-  description: 'Savr is an offline-first expense tracker built for India. Track expenses, set budgets, and take control of your money. Available on Android.',
+  title: 'Savr – Free Expense Tracker Built for India',
+  description: 'Savr is a free offline-first expense tracker built for India. Track every rupee, set budgets, get smart insights, and back up to Google Drive automatically. Available on Android.',
   keywords: 'expense tracker, budget app, money manager, India, offline, savings, personal finance',
   authors: [{ name: 'Wary Dev' }],
   creator: 'Wary Dev',
   openGraph: {
-    title: 'Savr – Your Money, In Control',
+    title: 'Savr – Free Expense Tracker Built for India',
     description: 'Offline-first expense tracker built for India. Track expenses, set budgets, backup to Google Drive.',
     url: 'https://savrappindia.vercel.app',
     siteName: 'Savr',
