@@ -73,33 +73,21 @@ export async function generateMetadata({ params }) {
 }
 
 async function getRelatedPosts(currentSlug, category) {
-  let related = []
+  const { data: all } = await supabase
+    .from('posts')
+    .select('id, title, slug, excerpt, cover_image, created_at, category, author, author_image')
+    .eq('published', true)
+    .neq('slug', currentSlug)
+    .order('created_at', { ascending: false })
+    .limit(6)
 
-  if (category) {
-    const { data: sameCat } = await supabase
-      .from('posts')
-      .select('id, title, slug, excerpt, cover_image, created_at, category, author, author_image')
-      .eq('published', true)
-      .eq('category', category)
-      .neq('slug', currentSlug)
-      .limit(3)
+  if (!all || all.length === 0) return []
 
-    related = sameCat || []
-  }
+  const sameCategory = all.filter(p => p.category === category)
+  const others = all.filter(p => p.category !== category)
+  const combined = [...sameCategory, ...others]
 
-  if (related.length < 3) {
-    const { data: latest } = await supabase
-      .from('posts')
-      .select('id, title, slug, excerpt, cover_image, created_at, category, author, author_image')
-      .eq('published', true)
-      .neq('slug', currentSlug)
-      .not('id', 'in', `(${related.map(p => p.id).join(',') || 0})`)
-      .limit(3 - related.length)
-
-    related = [...related, ...(latest || [])]
-  }
-
-  return related
+  return combined.slice(0, 3)
 }
 
 export default async function PostPage({ params }) {
