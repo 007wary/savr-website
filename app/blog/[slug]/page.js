@@ -95,7 +95,7 @@ export default async function PostPage({ params }) {
           </p>
         )}
 
-        <h1 style={{ fontSize: '40px', fontWeight: '900', color: 'var(--text-primary)', lineHeight: '1.2', marginBottom: '24px' }}>
+        <h1 style={{ fontSize: 'clamp(24px, 4vw, 36px)', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.3', marginBottom: '24px' }}>
           {post.title}
         </h1>
 
