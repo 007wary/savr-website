@@ -36,7 +36,7 @@ export default function Contact() {
   }
 
   return (
-    <section style={{ background: 'var(--bg-elevated)', padding: '80px 24px' }}>
+    <section style={{ background: 'var(--bg-primary)', padding: '80px 24px' }}>
       <div style={{ maxWidth: '540px', margin: '0 auto', textAlign: 'center' }}>
 
         <p style={{
