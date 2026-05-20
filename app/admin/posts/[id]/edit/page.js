@@ -345,22 +345,22 @@ const [notifyMessage, setNotifyMessage] = useState('')
           borderRadius: '0 0 12px 12px',
           padding: '20px 24px',
         }}>
-          {htmlMode ? (
-            <textarea
-              id="html-editor"
-              value={htmlContent}
-              onChange={e => setHtmlContent(e.target.value)}
-              style={{
-                width: '100%', minHeight: '400px', background: 'transparent',
-                border: 'none', outline: 'none', color: '#d1d5db',
-                fontSize: '14px', lineHeight: '1.8', fontFamily: 'monospace',
-                resize: 'vertical', boxSizing: 'border-box',
-              }}
-              placeholder="Write raw HTML here..."
-            />
-          ) : (
+          <textarea
+            id="html-editor"
+            value={htmlContent}
+            onChange={e => setHtmlContent(e.target.value)}
+            style={{
+              display: htmlMode ? 'block' : 'none',
+              width: '100%', minHeight: '400px', background: 'transparent',
+              border: 'none', outline: 'none', color: '#d1d5db',
+              fontSize: '14px', lineHeight: '1.8', fontFamily: 'monospace',
+              resize: 'vertical', boxSizing: 'border-box',
+            }}
+            placeholder="Write raw HTML here..."
+          />
+          <div style={{ display: htmlMode ? 'none' : 'block' }}>
             <EditorContent editor={editor} />
-          )}
+          </div>
         </div>
 
       </div>
