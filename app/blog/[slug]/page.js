@@ -1,6 +1,8 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '../../lib/supabase'
+import ShareButtons from './ShareButtons'
+import BlogCard from '../BlogCard'
 
 export const revalidate = 60
 
@@ -69,6 +71,36 @@ export async function generateMetadata({ params }) {
   }
 }
 
+async function getRelatedPosts(currentSlug, category) {
+  let related = []
+
+  if (category) {
+    const { data: sameCat } = await supabase
+      .from('posts')
+      .select('id, title, slug, excerpt, cover_image, created_at, category, author, author_image')
+      .eq('published', true)
+      .eq('category', category)
+      .neq('slug', currentSlug)
+      .limit(3)
+
+    related = sameCat || []
+  }
+
+  if (related.length < 3) {
+    const { data: latest } = await supabase
+      .from('posts')
+      .select('id, title, slug, excerpt, cover_image, created_at, category, author, author_image')
+      .eq('published', true)
+      .neq('slug', currentSlug)
+      .not('id', 'in', `(${related.map(p => p.id).join(',') || 0})`)
+      .limit(3 - related.length)
+
+    related = [...related, ...(latest || [])]
+  }
+
+  return related
+}
+
 export default async function PostPage({ params }) {
   const { slug } = await params
 
@@ -80,6 +112,8 @@ export default async function PostPage({ params }) {
     .single()
 
   if (error || !post) notFound()
+
+  const relatedPosts = await getRelatedPosts(slug, post.category)
 
   return (
     <main style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '100px', paddingBottom: '80px' }}>
@@ -99,7 +133,7 @@ export default async function PostPage({ params }) {
           {post.title}
         </h1>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '40px', paddingBottom: '32px', borderBottom: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid var(--border)' }}>
           <Avatar src={post.author_image} name={post.author} />
           <div>
             <p style={{ color: 'var(--text-primary)', fontSize: '15px', fontWeight: '600', marginBottom: '2px' }}>
@@ -110,6 +144,8 @@ export default async function PostPage({ params }) {
             </p>
           </div>
         </div>
+
+        <ShareButtons title={post.title} slug={slug} />
 
         {post.cover_image && (
           <div style={{ width: '100%', borderRadius: '16px', overflow: 'hidden', marginBottom: '48px' }}>
@@ -144,6 +180,23 @@ export default async function PostPage({ params }) {
         />
 
       </div>
+
+      {/* Related Articles */}
+      {relatedPosts.length > 0 && (
+        <div style={{ borderTop: '1px solid var(--border)', marginTop: '80px', paddingTop: '64px', paddingBottom: '80px', background: 'var(--bg-elevated)' }}>
+          <div className="container" style={{ maxWidth: '780px' }}>
+            <h2 style={{ fontSize: '22px', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '32px' }}>
+              Related Articles
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '24px' }}>
+              {relatedPosts.map(p => (
+                <BlogCard key={p.id} post={p} />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
     </main>
   )
 }
