@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { supabase } from '../../lib/supabase'
 import ShareButtons from './ShareButtons'
 import BlogCard from '../BlogCard'
+import Footer from '../../../components/Footer'
 
 export const revalidate = 60
 
@@ -197,6 +198,7 @@ export default async function PostPage({ params }) {
         </div>
       )}
 
+    <Footer />
     </main>
   )
 }
