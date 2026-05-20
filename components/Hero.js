@@ -57,10 +57,8 @@ export default function Hero() {
             Track every rupee, set budgets, and back up automatically — no internet required.
           </p>
 
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-            <a href="https://play.google.com/store/apps/details?id=com.saver.savr" target="_blank" rel="noopener noreferrer" className="btn-primary">
-              Download on Google Play
-            </a>
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
+            <PlayStoreBadge />
             <a href="#features" className="btn-secondary">See Features</a>
           </div>
 
@@ -97,8 +95,65 @@ export default function Hero() {
         @media (max-width: 768px) {
           .container { grid-template-columns: 1fr !important; }
         }
+        .playstore-badge:hover { background: #1a1a1a !important; }
       `}</style>
     </section>
+  )
+}
+
+function PlayStoreBadge() {
+  return (
+    
+      <a href="https://play.google.com/store/apps/details?id=com.saver.savr"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="playstore-badge"
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: '12px',
+        background: '#000', color: '#fff',
+        padding: '10px 20px', borderRadius: '12px',
+        border: '1px solid rgba(255,255,255,0.15)',
+        textDecoration: 'none', transition: 'background 0.2s',
+      }}
+    >
+      <PlayStoreIcon />
+      <div style={{ lineHeight: '1.2' }}>
+        <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.5px' }}>GET IT ON</div>
+        <div style={{ fontSize: '18px', fontWeight: '600' }}>Google Play</div>
+      </div>
+    </a>
+  )
+}
+
+function PlayStoreIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ps1" x1="5.526" y1="24" x2="42.519" y2="24" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#32a071" />
+          <stop offset=".068" stopColor="#2da771" />
+          <stop offset=".476" stopColor="#15cf74" />
+          <stop offset=".801" stopColor="#06e775" />
+          <stop offset="1" stopColor="#17ff76" />
+        </linearGradient>
+        <linearGradient id="ps2" x1="21.863" y1="25.765" x2="5.017" y2="8.919" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#ff3a44" />
+          <stop offset="1" stopColor="#c31162" />
+        </linearGradient>
+        <linearGradient id="ps3" x1="3.527" y1="39.136" x2="19.366" y2="23.297" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#ffd500" />
+          <stop offset=".473" stopColor="#ff8f00" />
+        </linearGradient>
+        <linearGradient id="ps4" x1="25.517" y1="23.117" x2="32.882" y2="30.482" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#4285f4" />
+          <stop offset="1" stopColor="#1773ea" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#ps2)" d="M6 4.5C5.5 5 5.2 5.9 5.2 7.1v33.8c0 1.2.3 2.1.8 2.6L6.2 44l18.9-18.9v-.4L6 4.5z" />
+      <path fill="url(#ps3)" d="m31.4 31.3-6.3-6.3v-.5l6.3-6.3.1.1 7.5 4.3c2.1 1.2 2.1 3.1 0 4.3l-7.6 4.4z" />
+      <path fill="url(#ps1)" d="M31.5 31.2 25.1 24.8 6 43.9c.7.7 1.8.8 3.1.1l22.4-12.8" />
+      <path fill="url(#ps4)" d="M31.5 18.3 9.1 5.6C7.8 4.8 6.7 5 6 5.7l19.1 19.1 6.4-6.5z" />
+    </svg>
   )
 }
 
