@@ -114,10 +114,10 @@ export function StoryCard({ post }) {
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <article
         style={{
-          cursor: 'pointer',
+          display: 'flex', justifyContent: 'space-between', gap: '16px',
+          padding: '20px', cursor: 'pointer',
           border: '1px solid var(--border)',
           borderRadius: '16px',
-          overflow: 'hidden',
           background: 'var(--bg-surface)',
           transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
         }}
@@ -132,10 +132,10 @@ export function StoryCard({ post }) {
           e.currentTarget.style.borderColor = 'var(--border)'
         }}
       >
-        <CoverImage src={post.cover_image} alt={post.title} height="160px" borderRadius="0px" />
-        <div style={{ padding: '20px' }}>
-          <p style={{ color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '8px' }}>
-            {post.category || 'General'}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginBottom: '6px' }}>
+            {formatDate(post.created_at)}
+            {post.category && <span style={{ color: 'var(--color-primary)', fontWeight: '700', marginLeft: '8px', textTransform: 'uppercase', fontSize: '11px', letterSpacing: '0.06em' }}>{post.category}</span>}
           </p>
           <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4', marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
             {post.title}
@@ -145,10 +145,8 @@ export function StoryCard({ post }) {
               {post.excerpt}
             </p>
           )}
-          <p style={{ color: 'var(--text-subtle)', fontSize: '12px', marginTop: '12px' }}>
-            {formatDate(post.created_at)}
-          </p>
         </div>
+        <CoverImage src={post.cover_image} alt={post.title} width="120px" height="80px" borderRadius="10px" />
       </article>
     </Link>
   )
