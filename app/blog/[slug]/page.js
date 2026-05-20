@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '../../lib/supabase'
 import ShareButtons from './ShareButtons'
-import BlogCard from '../BlogCard'
+import { RelatedCard } from '../BlogCard'
 import Footer from '../../../components/Footer'
 
 export const revalidate = 60
@@ -179,7 +179,7 @@ export default async function PostPage({ params }) {
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '24px' }}>
               {relatedPosts.map(p => (
-                <BlogCard key={p.id} post={p} />
+                <RelatedCard key={p.id} post={p} />
               ))}
             </div>
           </div>
