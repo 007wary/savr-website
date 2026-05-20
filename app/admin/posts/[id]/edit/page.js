@@ -105,7 +105,9 @@ const [notifyMessage, setNotifyMessage] = useState('')
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
       body: JSON.stringify({
         id, title, slug, excerpt,
-        content: editor.getHTML(),
+        content: htmlMode
+  ? (document.getElementById('html-editor')?.value || editor.getHTML())
+  : editor.getHTML(),
         cover_image: coverImage,
         category, author,
         published: publish
