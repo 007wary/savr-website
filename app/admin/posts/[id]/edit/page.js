@@ -1,11 +1,6 @@
 'use client'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import LinkExt from '@tiptap/extension-link'
-import Image from '@tiptap/extension-image'
-import Placeholder from '@tiptap/extension-placeholder'
 import { use } from 'react'
 
 export default function EditPost({ params }) {
@@ -17,32 +12,13 @@ export default function EditPost({ params }) {
   const [category, setCategory] = useState('')
   const [author, setAuthor] = useState('')
   const [published, setPublished] = useState(false)
+  const [content, setContent] = useState('')
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [postContent, setPostContent] = useState('')
   const [message, setMessage] = useState('')
-  const [, forceUpdate] = useState(0)
   const [notifying, setNotifying] = useState(false)
-  const postRef = useRef(null)
-  const htmlModeRef = useRef(false)
-  const contentLoaded = useRef(false)
-const [notifyMessage, setNotifyMessage] = useState('')
-  const [htmlContent, setHtmlContent] = useState('')
+  const [notifyMessage, setNotifyMessage] = useState('')
   const router = useRouter()
-
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      LinkExt.configure({ openOnClick: false }),
-      Image,
-      Placeholder.configure({ placeholder: 'Write your post here...' }),
-    ],
-    editorProps: {
-      attributes: {
-        style: 'min-height: 400px; outline: none; color: #d1d5db; font-size: 16px; line-height: 1.8;',
-      },
-    },
-  })
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token')
@@ -66,38 +42,24 @@ const [notifyMessage, setNotifyMessage] = useState('')
     setCategory(post.category || '')
     setAuthor(post.author || '')
     setPublished(post.published)
-    setPostContent(post.content || '')
-    postRef.current = post
+    setContent(post.content || '')
     setLoading(false)
-    return post
   }
 
-  useEffect(() => {
-    if (editor && postContent && !contentLoaded.current) {
-      editor.commands.setContent(postContent)
-      contentLoaded.current = true
-    }
-  }, [editor, postContent])
-
   async function handleNotify() {
-  if (!published) return
-  setNotifying(true)
-  setNotifyMessage('')
-  const token = localStorage.getItem('admin_token')
-
-  const res = await fetch('/api/notify-subscribers', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-admin-token': token,
-    },
-    body: JSON.stringify({ title, excerpt, slug }),
-  })
-
-  const data = await res.json()
-  setNotifyMessage(data.message || data.error || 'Done.')
-  setNotifying(false)
-}
+    if (!published) return
+    setNotifying(true)
+    setNotifyMessage('')
+    const token = localStorage.getItem('admin_token')
+    const res = await fetch('/api/notify-subscribers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      body: JSON.stringify({ title, excerpt, slug }),
+    })
+    const data = await res.json()
+    setNotifyMessage(data.message || data.error || 'Done.')
+    setNotifying(false)
+  }
 
   async function handleSave(publish) {
     if (!title) { setMessage('Title is required.'); return }
@@ -105,19 +67,12 @@ const [notifyMessage, setNotifyMessage] = useState('')
     setMessage('')
     const token = localStorage.getItem('admin_token')
 
-    const content = htmlModeRef.current
-      ? htmlContent
-      : editor?.getHTML() || ''
-
     const res = await fetch('/api/admin', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
       body: JSON.stringify({
-        id, title, slug, excerpt,
-        content,
-        cover_image: coverImage,
-        category, author,
-        published: publish
+        id, title, slug, excerpt, content,
+        cover_image: coverImage, category, author, published: publish
       })
     })
 
@@ -140,7 +95,6 @@ const [notifyMessage, setNotifyMessage] = useState('')
     <div style={{ minHeight: '100vh', background: '#0A0A0F', paddingTop: '100px', paddingBottom: '80px' }}>
       <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 32px' }}>
 
-        {/* Top bar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
           <button onClick={() => router.push('/admin/posts')} style={{ color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
             ← Back
@@ -170,26 +124,20 @@ const [notifyMessage, setNotifyMessage] = useState('')
               </button>
             )}
             {published && (
-  <button onClick={handleNotify} disabled={notifying} style={{
-    background: '#0e7490', color: '#fff', border: 'none',
-    padding: '10px 20px', borderRadius: '12px',
-    cursor: 'pointer', fontSize: '14px', fontWeight: '600',
-  }}>
-    {notifying ? 'Notifying...' : '📬 Notify Subscribers'}
-  </button>
-)}
+              <button onClick={handleNotify} disabled={notifying} style={{
+                background: '#0e7490', color: '#fff', border: 'none',
+                padding: '10px 20px', borderRadius: '12px',
+                cursor: 'pointer', fontSize: '14px', fontWeight: '600',
+              }}>
+                {notifying ? 'Notifying...' : '📬 Notify Subscribers'}
+              </button>
+            )}
           </div>
         </div>
 
-        {message && (
-          <p style={{ color: '#f87171', fontSize: '14px', marginBottom: '16px' }}>{message}</p>
-        )}
+        {message && <p style={{ color: '#f87171', fontSize: '14px', marginBottom: '16px' }}>{message}</p>}
+        {notifyMessage && <p style={{ color: '#4ade80', fontSize: '14px', marginBottom: '16px' }}>{notifyMessage}</p>}
 
-        {notifyMessage && (
-  <p style={{ color: '#4ade80', fontSize: '14px', marginBottom: '16px' }}>{notifyMessage}</p>
-)}
-
-        {/* Title */}
         <input
           type="text"
           placeholder="Post title"
@@ -202,164 +150,52 @@ const [notifyMessage, setNotifyMessage] = useState('')
           }}
         />
 
-        {/* Meta fields */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
           <div>
             <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Slug</label>
-            <input
-              type="text"
-              placeholder="post-slug"
-              value={slug}
-              onChange={e => setSlug(e.target.value)}
-              style={{
-                width: '100%', background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                padding: '10px 14px', color: '#9ca3af', fontSize: '14px', outline: 'none',
-                boxSizing: 'border-box',
-              }}
-            />
+            <input type="text" value={slug} onChange={e => setSlug(e.target.value)} placeholder="post-slug"
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '10px 14px', color: '#9ca3af', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
           <div>
             <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Category</label>
-            <input
-              type="text"
-              placeholder="e.g. Finance Tips"
-              value={category}
-              onChange={e => setCategory(e.target.value)}
-              style={{
-                width: '100%', background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
-                boxSizing: 'border-box',
-              }}
-            />
+            <input type="text" value={category} onChange={e => setCategory(e.target.value)} placeholder="e.g. Tips"
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
           <div>
             <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Author</label>
-            <input
-              type="text"
-              placeholder="Wary Dev"
-              value={author}
-              onChange={e => setAuthor(e.target.value)}
-              style={{
-                width: '100%', background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
-                boxSizing: 'border-box',
-              }}
-            />
+            <input type="text" value={author} onChange={e => setAuthor(e.target.value)} placeholder="Wary Dev"
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
           <div>
             <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Cover Image URL</label>
-            <input
-              type="text"
-              placeholder="https://..."
-              value={coverImage}
-              onChange={e => setCoverImage(e.target.value)}
-              style={{
-                width: '100%', background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
-                boxSizing: 'border-box',
-              }}
-            />
+            <input type="text" value={coverImage} onChange={e => setCoverImage(e.target.value)} placeholder="https://..."
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }} />
           </div>
         </div>
 
         <div style={{ marginBottom: '24px' }}>
           <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Excerpt</label>
-          <input
-            type="text"
-            placeholder="Short description shown in blog listings..."
-            value={excerpt}
-            onChange={e => setExcerpt(e.target.value)}
-            style={{
-              width: '100%', background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-              padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none',
-              boxSizing: 'border-box',
-            }}
-          />
+          <input type="text" value={excerpt} onChange={e => setExcerpt(e.target.value)} placeholder="Short description shown in blog listings..."
+            style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', padding: '10px 14px', color: '#d1d5db', fontSize: '14px', outline: 'none', boxSizing: 'border-box' }} />
         </div>
 
-        {/* Toolbar */}
-        <div style={{
-          display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '4px',
-          background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: '12px 12px 0 0', padding: '12px 16px',
-        }}>
-          {[
-            { label: 'B', action: () => editor?.chain().focus().toggleBold().run(), active: editor?.isActive('bold') },
-            { label: 'I', action: () => editor?.chain().focus().toggleItalic().run(), active: editor?.isActive('italic') },
-            { label: 'H2', action: () => editor?.chain().focus().toggleHeading({ level: 2 }).run(), active: editor?.isActive('heading', { level: 2 }) },
-            { label: 'H3', action: () => editor?.chain().focus().toggleHeading({ level: 3 }).run(), active: editor?.isActive('heading', { level: 3 }) },
-            { label: '• List', action: () => editor?.chain().focus().toggleBulletList().run(), active: editor?.isActive('bulletList') },
-            { label: '1. List', action: () => editor?.chain().focus().toggleOrderedList().run(), active: editor?.isActive('orderedList') },
-            { label: '❝', action: () => editor?.chain().focus().toggleBlockquote().run(), active: editor?.isActive('blockquote') },
-            { label: 'Code', action: () => editor?.chain().focus().toggleCodeBlock().run(), active: editor?.isActive('codeBlock') },
-          ].map(btn => (
-            <button
-              key={btn.label}
-              onClick={btn.action}
-              style={{
-                padding: '6px 12px', borderRadius: '8px', fontSize: '13px', fontWeight: '600',
-                cursor: 'pointer', border: 'none', transition: 'all 0.15s ease',
-                background: btn.active ? '#6C63FF' : 'rgba(255,255,255,0.05)',
-                color: btn.active ? '#fff' : '#9ca3af',
-              }}
-            >
-              {btn.label}
-            </button>
-          ))}
-        <button
-            onClick={() => {
-              if (!htmlModeRef.current) {
-                setHtmlContent(editor?.getHTML() || '')
-                htmlModeRef.current = true
-              } else {
-                editor?.commands.setContent(htmlContent)
-                htmlModeRef.current = false
-              }
-              forceUpdate(n => n + 1)
-            }}
-            style={{
-              marginLeft: 'auto', padding: '6px 14px', borderRadius: '8px',
-              fontSize: '13px', fontWeight: '600', cursor: 'pointer', border: 'none',
-              background: htmlModeRef.current ? '#6C63FF' : 'rgba(255,255,255,0.05)',
-            color: htmlModeRef.current ? '#fff' : '#9ca3af',
-            }}
-          >
-            {htmlModeRef.current ? '← Visual' : '<> HTML'}
-          </button>
-        </div>
-
-        {/* Editor */}
-        <div style={{
-          background: 'rgba(255,255,255,0.03)',
-          border: '1px solid rgba(255,255,255,0.08)',
-          borderTop: 'none',
-          borderRadius: '0 0 12px 12px',
-          padding: '20px 24px',
-        }}>
+        <div>
+          <label style={{ color: '#6b7280', fontSize: '12px', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '6px' }}>Content (HTML)</label>
           <textarea
-            id="html-editor"
-            value={htmlContent}
-            onChange={e => setHtmlContent(e.target.value)}
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            placeholder="Paste your HTML content here..."
             style={{
-              display: htmlModeRef.current ? 'block' : 'none',
-              width: '100%', minHeight: '400px', background: 'transparent',
-              border: 'none', outline: 'none', color: '#d1d5db',
-              fontSize: '14px', lineHeight: '1.8', fontFamily: 'monospace',
-              resize: 'vertical', boxSizing: 'border-box',
+              width: '100%', minHeight: '500px', background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px',
+              padding: '20px 24px', color: '#d1d5db', fontSize: '14px',
+              lineHeight: '1.8', fontFamily: 'monospace', resize: 'vertical',
+              outline: 'none', boxSizing: 'border-box',
             }}
-            placeholder="Write raw HTML here..."
           />
-          <div style={{ display: htmlModeRef.current ? 'none' : 'block' }}>
-            <EditorContent editor={editor} />
-          </div>
         </div>
 
       </div>
