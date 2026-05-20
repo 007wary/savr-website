@@ -9,6 +9,9 @@ const inter = Inter({
 })
 
 export const metadata = {
+  verification: {
+    google: 'LhDba_-p3HJwjp-EbkjyvKZp8SjVn7EttjlrptBvEd0',
+  },
   title: 'Savr – Free Expense Tracker Built for India',
   description: 'Savr is a free offline-first expense tracker built for India. Track every rupee, set budgets, get smart insights, and back up to Google Drive automatically. Available on Android.',
   keywords: 'expense tracker, budget app, money manager, India, offline, savings, personal finance',
