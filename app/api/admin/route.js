@@ -24,11 +24,11 @@ export async function POST(request) {
   if (!checkAuth(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { title, slug, excerpt, content, cover_image, published } = body
+  const { title, slug, excerpt, content, cover_image, published, category, author } = body
 
   const { data, error } = await supabaseAdmin
     .from('posts')
-    .insert([{ title, slug, excerpt, content, cover_image, published }])
+    .insert([{ title, slug, excerpt, content, cover_image, published, category, author }])
     .select()
     .single()
 
@@ -41,11 +41,11 @@ export async function PATCH(request) {
   if (!checkAuth(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { id, title, slug, excerpt, content, cover_image, published } = body
+  const { id, title, slug, excerpt, content, cover_image, published, category, author } = body
 
   const { data, error } = await supabaseAdmin
     .from('posts')
-    .update({ title, slug, excerpt, content, cover_image, published })
+    .update({ title, slug, excerpt, content, cover_image, published, category, author })
     .eq('id', id)
     .select()
     .single()

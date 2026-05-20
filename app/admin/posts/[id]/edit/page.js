@@ -23,6 +23,7 @@ export default function EditPost({ params }) {
   const [htmlMode, setHtmlMode] = useState(false)
   const [notifying, setNotifying] = useState(false)
   const postRef = useRef(null)
+  const htmlModeRef = useRef(false)
 const [notifyMessage, setNotifyMessage] = useState('')
   const router = useRouter()
 
@@ -68,7 +69,7 @@ const [notifyMessage, setNotifyMessage] = useState('')
   }
 
   useEffect(() => {
-    if (editor && postRef.current) {
+    if (editor && postRef.current && !htmlModeRef.current) {
       editor.commands.setContent(postRef.current.content || '')
     }
   }, [editor])
@@ -309,9 +310,11 @@ const [notifyMessage, setNotifyMessage] = useState('')
         <button
             onClick={() => {
               if (!htmlMode) {
+                htmlModeRef.current = true
                 setHtmlMode(true)
               } else {
                 editor?.commands.setContent(document.getElementById('html-editor').value)
+                htmlModeRef.current = false
                 setHtmlMode(false)
               }
             }}
