@@ -19,6 +19,7 @@ export default function NewPost() {
   const [category, setCategory] = useState('')
   const [author, setAuthor] = useState('Wary Dev')
   const [saving, setSaving] = useState(false)
+const [htmlMode, setHtmlMode] = useState(false)
   const [message, setMessage] = useState('')
   const router = useRouter()
 
@@ -240,6 +241,24 @@ export default function NewPost() {
               {btn.label}
             </button>
           ))}
+          <button
+            onClick={() => {
+              if (!htmlMode) {
+                setHtmlMode(true)
+              } else {
+                editor?.commands.setContent(document.getElementById('html-textarea').value)
+                setHtmlMode(false)
+              }
+            }}
+            style={{
+              marginLeft: 'auto', padding: '6px 12px', borderRadius: '8px', fontSize: '13px', fontWeight: '600',
+              cursor: 'pointer', border: 'none', transition: 'all 0.15s ease',
+              background: htmlMode ? '#6C63FF' : 'rgba(255,255,255,0.05)',
+              color: htmlMode ? '#fff' : '#9ca3af',
+            }}
+          >
+            &lt;&gt; HTML
+          </button>
         </div>
 
         {/* Editor */}
@@ -250,7 +269,20 @@ export default function NewPost() {
           borderRadius: '0 0 12px 12px',
           padding: '20px 24px',
         }}>
-          <EditorContent editor={editor} />
+          {htmlMode ? (
+            <textarea
+              id="html-textarea"
+              defaultValue={editor?.getHTML()}
+              style={{
+                width: '100%', minHeight: '400px', background: 'transparent',
+                border: 'none', outline: 'none', color: '#d1d5db',
+                fontSize: '14px', lineHeight: '1.8', fontFamily: 'monospace',
+                resize: 'vertical', boxSizing: 'border-box',
+              }}
+            />
+          ) : (
+            <EditorContent editor={editor} />
+          )}
         </div>
 
       </div>
