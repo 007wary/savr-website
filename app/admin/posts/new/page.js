@@ -257,8 +257,8 @@ export default function NewPost() {
             style={{
               marginLeft: 'auto', padding: '6px 12px', borderRadius: '8px', fontSize: '13px', fontWeight: '600',
               cursor: 'pointer', border: 'none', transition: 'all 0.15s ease',
-              background: htmlMode ? '#6C63FF' : 'rgba(255,255,255,0.05)',
-              color: htmlMode ? '#fff' : '#9ca3af',
+              background: htmlModeRef.current ? '#6C63FF' : 'rgba(255,255,255,0.05)',
+              color: htmlModeRef.current ? '#fff' : '#9ca3af',
             }}
           >
             &lt;&gt; HTML
