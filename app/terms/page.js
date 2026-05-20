@@ -10,15 +10,15 @@ export default function TermsOfService() {
   return (
     <>
       <Navbar />
-      <main style={{ paddingTop: '70px', minHeight: '100vh', background: '#0A0A0F' }}>
+      <main style={{ paddingTop: '70px', minHeight: '100vh', background: 'var(--bg-primary)' }}>
         <section style={{ padding: '80px 24px' }}>
           <div style={{ maxWidth: '740px', margin: '0 auto' }}>
 
-            <p style={{ fontSize: '13px', fontWeight: '600', color: '#6C63FF', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '12px' }}>Legal</p>
-            <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '800', color: '#ffffff', marginBottom: '8px' }}>Terms of Service</h1>
-            <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '64px' }}>Effective Date: April 2026</p>
+            <p style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '12px' }}>Legal</p>
+            <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '8px' }}>Terms of Service</h1>
+            <p style={{ fontSize: '14px', color: 'var(--text-subtle)', marginBottom: '64px' }}>Effective Date: April 2026</p>
 
-            <p style={{ fontSize: '15px', color: '#9ca3af', lineHeight: '1.8', marginBottom: '48px' }}>
+            <p style={{ fontSize: '15px', color: 'var(--text-muted)', lineHeight: '1.8', marginBottom: '48px' }}>
               Welcome to Savr. By downloading or using the app, you agree to these Terms of Service. Please read them carefully.
             </p>
 
@@ -89,8 +89,8 @@ export default function TermsOfService() {
               },
             ].map(section => (
               <div key={section.title} style={{ marginBottom: '40px' }}>
-                <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#ffffff', marginBottom: '12px' }}>{section.title}</h2>
-                <p style={{ fontSize: '15px', color: '#9ca3af', lineHeight: '1.8', whiteSpace: 'pre-line' }}>{section.content}</p>
+                <h2 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '12px' }}>{section.title}</h2>
+                <p style={{ fontSize: '15px', color: 'var(--text-muted)', lineHeight: '1.8', whiteSpace: 'pre-line' }}>{section.content}</p>
               </div>
             ))}
 

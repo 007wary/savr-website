@@ -10,16 +10,16 @@ export default function PrivacyPolicy() {
   return (
     <>
       <Navbar />
-      <main style={{ paddingTop: '70px', minHeight: '100vh', background: '#0A0A0F' }}>
+      <main style={{ paddingTop: '70px', minHeight: '100vh', background: 'var(--bg-primary)' }}>
         <section style={{ padding: '80px 24px' }}>
           <div style={{ maxWidth: '740px', margin: '0 auto' }}>
 
-            <p style={{ fontSize: '13px', fontWeight: '600', color: '#6C63FF', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '12px' }}>Legal</p>
-            <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '800', color: '#ffffff', marginBottom: '8px' }}>Privacy Policy</h1>
-            <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '64px' }}>Effective Date: April 2026</p>
+            <p style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '12px' }}>Legal</p>
+            <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '8px' }}>Privacy Policy</h1>
+            <p style={{ fontSize: '14px', color: 'var(--text-subtle)', marginBottom: '64px' }}>Effective Date: April 2026</p>
 
-            <div style={{ background: 'rgba(108,99,255,0.08)', border: '1px solid rgba(108,99,255,0.2)', borderRadius: '12px', padding: '20px 24px', marginBottom: '48px' }}>
-              <p style={{ fontSize: '15px', color: '#a78bfa', lineHeight: '1.7', margin: 0 }}>
+            <div style={{ background: 'var(--color-primary-glow)', border: '1px solid var(--color-primary-border)', borderRadius: '12px', padding: '20px 24px', marginBottom: '48px' }}>
+              <p style={{ fontSize: '15px', color: 'var(--color-primary)', lineHeight: '1.7', margin: 0 }}>
                 <strong>Summary:</strong> Your financial data never leaves your device. It is stored locally and backed up only to your own Google Drive. We never store your expenses on our servers.
               </p>
             </div>
@@ -79,8 +79,8 @@ export default function PrivacyPolicy() {
               },
             ].map(section => (
               <div key={section.title} style={{ marginBottom: '40px' }}>
-                <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#ffffff', marginBottom: '12px' }}>{section.title}</h2>
-                <p style={{ fontSize: '15px', color: '#9ca3af', lineHeight: '1.8', whiteSpace: 'pre-line' }}>{section.content}</p>
+                <h2 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '12px' }}>{section.title}</h2>
+                <p style={{ fontSize: '15px', color: 'var(--text-muted)', lineHeight: '1.8', whiteSpace: 'pre-line' }}>{section.content}</p>
               </div>
             ))}
 
