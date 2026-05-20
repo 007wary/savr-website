@@ -86,16 +86,31 @@ export function HeroSideCard({ post }) {
   return (
     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
       <article
-        style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', paddingBottom: '20px', borderBottom: '1px solid var(--border)', cursor: 'pointer' }}
-        onMouseEnter={e => e.currentTarget.querySelector('.side-title').style.color = 'var(--accent)'}
-        onMouseLeave={e => e.currentTarget.querySelector('.side-title').style.color = 'var(--text-primary)'}
+        style={{
+          display: 'flex', gap: '16px', alignItems: 'flex-start',
+          padding: '16px', cursor: 'pointer',
+          border: '1px solid var(--border)',
+          borderRadius: '16px',
+          background: 'var(--bg-surface)',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease',
+        }}
+        onMouseEnter={e => {
+          e.currentTarget.style.transform = 'translateY(-4px)'
+          e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.12)'
+          e.currentTarget.style.borderColor = 'var(--color-primary-border)'
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.transform = 'translateY(0)'
+          e.currentTarget.style.boxShadow = 'none'
+          e.currentTarget.style.borderColor = 'var(--border)'
+        }}
       >
         <CoverImage src={post.cover_image} alt={post.title} width="110px" height="80px" borderRadius="10px" />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ color: 'var(--accent)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+          <p style={{ color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
             {post.category || 'General'}
           </p>
-          <h3 className="side-title" style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4', marginBottom: '8px', transition: 'color 0.2s ease', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+          <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: '1.4', marginBottom: '8px', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
             {post.title}
           </h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
