@@ -24,6 +24,7 @@ export default function EditPost({ params }) {
   const [notifying, setNotifying] = useState(false)
   const postRef = useRef(null)
   const htmlModeRef = useRef(false)
+  const contentLoaded = useRef(false)
 const [notifyMessage, setNotifyMessage] = useState('')
   const router = useRouter()
 
@@ -69,8 +70,9 @@ const [notifyMessage, setNotifyMessage] = useState('')
   }
 
   useEffect(() => {
-    if (editor && postRef.current && !htmlModeRef.current) {
+    if (editor && postRef.current && !contentLoaded.current) {
       editor.commands.setContent(postRef.current.content || '')
+      contentLoaded.current = true
     }
   }, [editor])
 
@@ -100,14 +102,17 @@ const [notifyMessage, setNotifyMessage] = useState('')
     setMessage('')
     const token = localStorage.getItem('admin_token')
 
+    const textarea = document.getElementById('html-editor')
+    const content = htmlModeRef.current && textarea
+      ? textarea.value
+      : editor?.getHTML() || ''
+
     const res = await fetch('/api/admin', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
       body: JSON.stringify({
         id, title, slug, excerpt,
-        content: htmlMode
-  ? (document.getElementById('html-editor')?.value || editor.getHTML())
-  : editor.getHTML(),
+        content,
         cover_image: coverImage,
         category, author,
         published: publish
