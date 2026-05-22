@@ -34,11 +34,6 @@ export default function AdminPosts() {
     setPosts(posts.filter(p => p.id !== id))
   }
 
-  function logout() {
-    localStorage.removeItem('admin_token')
-    router.push('/admin')
-  }
-
   if (loading) return (
     <div style={{ minHeight: '100vh', background: '#0A0A0F', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '100px' }}>
       <p style={{ color: '#6b7280' }}>Loading...</p>
@@ -63,14 +58,6 @@ export default function AdminPosts() {
             }}>
               + New Post
             </Link>
-            <button onClick={logout} style={{
-              background: 'rgba(255,255,255,0.05)', color: '#9ca3af',
-              border: '1px solid rgba(255,255,255,0.1)',
-              padding: '10px 20px', borderRadius: '12px', cursor: 'pointer',
-              fontSize: '14px', transition: 'background 0.2s ease',
-            }}>
-              Logout
-            </button>
           </div>
         </div>
 
