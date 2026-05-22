@@ -20,15 +20,13 @@ export default function EditPost({ params }) {
   const [notifyMessage, setNotifyMessage] = useState('')
   const router = useRouter()
 
-  useEffect(() => {
-    const token = localStorage.getItem('admin_token')
-    if (!token) { router.push('/habgra'); return }
-    fetchPost(token)
+ useEffect(() => {
+    fetchPost()
   }, [])
 
-  async function fetchPost(token) {
+  async function fetchPost() {
     const res = await fetch('/api/admin', {
-      headers: { 'x-admin-token': token }
+      credentials: 'same-origin'
     })
     if (res.status === 401) { router.push('/habgra'); return }
     const posts = await res.json()
@@ -50,10 +48,10 @@ export default function EditPost({ params }) {
     if (!published) return
     setNotifying(true)
     setNotifyMessage('')
-    const token = localStorage.getItem('admin_token')
     const res = await fetch('/api/notify-subscribers', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify({ title, excerpt, slug }),
     })
     const data = await res.json()
@@ -65,11 +63,10 @@ export default function EditPost({ params }) {
     if (!title) { setMessage('Title is required.'); return }
     setSaving(true)
     setMessage('')
-    const token = localStorage.getItem('admin_token')
-
     const res = await fetch('/api/admin', {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify({
         id, title, slug, excerpt, content,
         cover_image: coverImage, category, author, published: publish

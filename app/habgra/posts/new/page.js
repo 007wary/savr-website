@@ -19,8 +19,8 @@ export default function NewPost() {
   const router = useRouter()
 
   useEffect(() => {
-    const token = localStorage.getItem('admin_token')
-    if (!token) router.push('/habgra')
+    fetch('/api/admin', { credentials: 'same-origin' })
+      .then(res => { if (res.status === 401) router.push('/habgra') })
   }, [])
 
   useEffect(() => {
@@ -34,11 +34,10 @@ export default function NewPost() {
     if (!title || !content) { setMessage('Title and content are required.'); return }
     setSaving(true)
     setMessage('')
-    const token = localStorage.getItem('admin_token')
-
     const res = await fetch('/api/admin', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
       body: JSON.stringify({
         title, slug: slug || slugify(title), excerpt,
         content, cover_image: coverImage, category, author, published: publish
