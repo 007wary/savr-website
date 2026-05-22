@@ -2,8 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
-const PROXY_URL = 'https://fsrbsqhlgfdqugixqtxc.supabase.co/functions/v1/analytics-proxy'
-const PROXY_SECRET = process.env.NEXT_PUBLIC_ANALYTICS_SECRET
+const PROXY_URL = '/api/analytics-proxy'
 const PAGE_SIZE = 20
 
 function timeAgo(date) {
@@ -92,7 +91,7 @@ export default function AnalyticsPage() {
   async function loadAll(secret) {
     setLastUpdated('Refreshing...')
     try {
-      const res = await fetch(PROXY_URL, { headers: { 'Content-Type': 'application/json', 'x-dashboard-secret': PROXY_SECRET } })
+      const res = await fetch(PROXY_URL, { headers: { 'Content-Type': 'application/json', 'x-admin-token': secret } })
       const users = await res.json()
       setAllUsers(users || [])
       setFilteredUsers(users || [])
@@ -156,9 +155,9 @@ export default function AnalyticsPage() {
     if (!notifRecipients.length) return setNotifStatus({ type: 'error', text: 'No users with FCM tokens to send to' })
     setSending(true); setNotifStatus(null)
     try {
-      const res = await fetch(PROXY_URL + '?action=notify', {
+      const res = await fetch(PROXY_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-dashboard-secret': PROXY_SECRETRef.current },
+        headers: { 'Content-Type': 'application/json', 'x-admin-token': secretRef.current },
         body: JSON.stringify({ title: notifTitle.trim(), body: notifBody.trim(), tokens: notifRecipients.map(u => u.fcm_token) })
       })
       const result = await res.json()
