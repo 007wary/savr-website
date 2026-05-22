@@ -20,7 +20,7 @@ export default function AdminLogin() {
 
     const data = await res.json()
     if (res.ok) {
-      router.push('/admin/posts')
+      router.push('/habgra/posts')
     } else {
       setError(data.error || 'Wrong password. Try again.')
     }

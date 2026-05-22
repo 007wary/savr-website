@@ -16,7 +16,7 @@ export default function AdminPosts() {
     const res = await fetch('/api/admin', {
       credentials: 'same-origin'
     })
-    if (res.status === 401) { router.push('/admin'); return }
+    if (res.status === 401) { router.push('/habgra'); return }
     const data = await res.json()
     setPosts(data)
     setLoading(false)

@@ -5,11 +5,11 @@ import { usePathname, useRouter } from 'next/navigation'
 export default function AdminNav() {
   const pathname = usePathname()
   const router = useRouter()
-  const isLoginPage = pathname === '/admin'
+  const isLoginPage = pathname === '/habgra'
 
   async function logout() {
     await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' })
-    router.push('/admin')
+    router.push('/habgra')
   }
 
   return (
@@ -43,7 +43,7 @@ export default function AdminNav() {
             border: '1px solid rgba(255,255,255,0.08)',
           }}>
             {[
-              { label: 'Posts', href: '/admin/posts' },
+              { label: 'Posts', href: '/habgra/posts' },
               { label: 'Analytics', href: '/admin/analytics' },
             ].map(({ label, href }) => {
               const active = pathname.startsWith(href)
