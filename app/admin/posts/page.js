@@ -9,14 +9,12 @@ export default function AdminPosts() {
   const router = useRouter()
 
   useEffect(() => {
-    const token = localStorage.getItem('admin_token')
-    if (!token) { router.push('/admin'); return }
-    fetchPosts(token)
+    fetchPosts()
   }, [])
 
-  async function fetchPosts(token) {
+  async function fetchPosts() {
     const res = await fetch('/api/admin', {
-      headers: { 'x-admin-token': token }
+      credentials: 'same-origin'
     })
     if (res.status === 401) { router.push('/admin'); return }
     const data = await res.json()
@@ -26,10 +24,9 @@ export default function AdminPosts() {
 
   async function deletePost(id) {
     if (!confirm('Delete this post?')) return
-    const token = localStorage.getItem('admin_token')
     await fetch(`/api/admin?id=${id}`, {
       method: 'DELETE',
-      headers: { 'x-admin-token': token }
+      credentials: 'same-origin'
     })
     setPosts(posts.filter(p => p.id !== id))
   }

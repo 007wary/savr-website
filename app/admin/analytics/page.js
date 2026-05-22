@@ -45,7 +45,7 @@ function MiniChart({ days, colorFn }) {
 
 export default function AnalyticsPage() {
   const router = useRouter()
-  const secretRef = useRef('')
+  const secretRef = useRef('cookie')
   const [allUsers, setAllUsers] = useState([])
   const [filteredUsers, setFilteredUsers] = useState([])
   const [activeTab, setActiveTab] = useState('overview')
@@ -61,11 +61,8 @@ export default function AnalyticsPage() {
   const [sending, setSending] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem('admin_token')
-    if (!token) { router.push('/admin'); return }
-    secretRef.current = token
-    loadAll(token)
-    const interval = setInterval(() => loadAll(secretRef.current), 30000)
+    loadAll()
+    const interval = setInterval(() => loadAll(), 30000)
 
     const socket = new WebSocket('wss://fsrbsqhlgfdqugixqtxc.supabase.co/realtime/v1/websocket?apikey=sb_publishable_fTC_70PzCNPOs0_sNh1nEQ_Boj4EjqC&vsn=1.0.0')
     socket.onopen = () => socket.send(JSON.stringify({
@@ -88,10 +85,10 @@ export default function AnalyticsPage() {
     setCurrentPage(1)
   }, [searchQuery, allUsers])
 
-  async function loadAll(secret) {
+  async function loadAll() {
     setLastUpdated('Refreshing...')
     try {
-      const res = await fetch(PROXY_URL, { headers: { 'Content-Type': 'application/json', 'x-admin-token': secret } })
+      const res = await fetch(PROXY_URL, { credentials: 'same-origin' })
       const users = await res.json()
       setAllUsers(users || [])
       setFilteredUsers(users || [])
@@ -157,7 +154,8 @@ export default function AnalyticsPage() {
     try {
       const res = await fetch(PROXY_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-token': secretRef.current },
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
         body: JSON.stringify({ title: notifTitle.trim(), body: notifBody.trim(), tokens: notifRecipients.map(u => u.fcm_token) })
       })
       const result = await res.json()
@@ -198,7 +196,7 @@ export default function AnalyticsPage() {
         <div style={{ fontSize: 12, color: '#555' }}>{lastUpdated}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 20, background: '#00D9A522', color: '#00D9A5', border: '1px solid #00D9A533', fontWeight: 500 }}>● Live</span>
-          <button onClick={() => loadAll(secretRef.current)} style={{ background: '#181818', border: '1px solid #2a2a2a', borderRadius: 10, padding: '7px 14px', color: '#888', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>↻ Refresh</button>
+          <button onClick={() => loadAll()} style={{ background: '#181818', border: '1px solid #2a2a2a', borderRadius: 10, padding: '7px 14px', color: '#888', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>↻ Refresh</button>
         </div>
       </div>
 

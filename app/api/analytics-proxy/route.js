@@ -1,7 +1,7 @@
 const SUPABASE_URL = 'https://fsrbsqhlgfdqugixqtxc.supabase.co/functions/v1/analytics-proxy'
 
 export async function GET(request) {
-  const token = request.headers.get('x-admin-token')
+  const token = request.cookies.get('admin_session')?.value
   if (token !== process.env.ADMIN_PASSWORD) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
@@ -18,7 +18,7 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-  const token = request.headers.get('x-admin-token')
+  const token = request.cookies.get('admin_session')?.value
   if (token !== process.env.ADMIN_PASSWORD) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }

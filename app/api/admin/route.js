@@ -2,7 +2,7 @@ import { supabaseAdmin } from '../../lib/supabase-admin'
 import { NextResponse } from 'next/server'
 
 function checkAuth(request) {
-  const token = request.headers.get('x-admin-token')
+  const token = request.cookies.get('admin_session')?.value
   return token === process.env.ADMIN_PASSWORD
 }
 

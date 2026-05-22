@@ -7,8 +7,8 @@ export default function AdminNav() {
   const router = useRouter()
   const isLoginPage = pathname === '/admin'
 
-  function logout() {
-    localStorage.removeItem('admin_token')
+  async function logout() {
+    await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' })
     router.push('/admin')
   }
 
