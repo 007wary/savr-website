@@ -31,11 +31,30 @@ function BarList({ items, color }) {
 
 function MiniChart({ days, colorFn }) {
   const max = Math.max(...days.map(d => d.count), 1)
+  const [tooltip, setTooltip] = useState(null)
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, height: 100 }}>
+    <div style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', gap: 4, height: 100 }}>
+      {tooltip && (
+        <div style={{
+          position: 'absolute', top: -36, left: tooltip.x, transform: 'translateX(-50%)',
+          background: '#222', border: '1px solid #333', borderRadius: 8,
+          padding: '5px 10px', fontSize: 12, color: '#f0f0f0',
+          whiteSpace: 'nowrap', zIndex: 10, pointerEvents: 'none',
+        }}>
+          <span style={{ color: '#888', marginRight: 6 }}>{tooltip.date}</span>
+          <span style={{ fontWeight: 600, color: '#6C63FF' }}>{tooltip.count}</span>
+        </div>
+      )}
       {days.map((d, i) => (
-        <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, height: '100%', justifyContent: 'flex-end' }}>
-          <div style={{ width: '100%', height: `${Math.max((d.count / max) * 100, d.count > 0 ? 6 : 0)}%`, minHeight: 3, borderRadius: '4px 4px 0 0', background: colorFn(d, i), transition: 'height 0.8s ease' }} />
+        <div key={i}
+          onMouseEnter={e => {
+            const rect = e.currentTarget.getBoundingClientRect()
+            const parentRect = e.currentTarget.parentElement.getBoundingClientRect()
+            setTooltip({ x: rect.left - parentRect.left + rect.width / 2, date: d.label || '', count: d.count })
+          }}
+          onMouseLeave={() => setTooltip(null)}
+          style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, height: '100%', justifyContent: 'flex-end', cursor: 'default' }}>
+          <div style={{ width: '100%', height: `${Math.max((d.count / max) * 100, d.count > 0 ? 6 : 0)}%`, minHeight: 3, borderRadius: '4px 4px 0 0', background: colorFn(d, i), transition: 'height 0.8s ease', opacity: tooltip ? (tooltip.count === d.count ? 1 : 0.5) : 1 }} />
           <div style={{ fontSize: 10, color: d.isToday ? '#00D9A5' : '#555' }}>{d.isToday ? '·' : ''}</div>
         </div>
       ))}
@@ -59,6 +78,7 @@ export default function AnalyticsPage() {
   const [notifTarget, setNotifTarget] = useState('all')
   const [notifStatus, setNotifStatus] = useState(null)
   const [sending, setSending] = useState(false)
+  const [dateRange, setDateRange] = useState(30)
 
   useEffect(() => {
     loadAll()
@@ -102,28 +122,33 @@ export default function AnalyticsPage() {
 
   // Computed values
   const now = new Date()
+  const rangeStart = new Date(now - dateRange * 864e5)
   const day7 = new Date(now - 7 * 864e5)
   const day30 = new Date(now - 30 * 864e5)
   const today = now.toISOString().split('T')[0]
   const total = allUsers.length
+  const activeInRange = allUsers.filter(u => u.last_active && new Date(u.last_active) > rangeStart).length
   const active7 = allUsers.filter(u => u.last_active && new Date(u.last_active) > day7).length
   const activeToday = allUsers.filter(u => u.last_active && u.last_active.startsWith(today)).length
   const fcmCount = allUsers.filter(u => u.fcm_token).length
+  const newInRange = allUsers.filter(u => u.created_at && new Date(u.created_at) > rangeStart).length
   const new7 = allUsers.filter(u => u.created_at && new Date(u.created_at) > day7).length
   const new30 = allUsers.filter(u => u.created_at && new Date(u.created_at) > day30).length
-  const retention = total > 0 ? Math.round((active7 / total) * 100) : 0
+  const retention = total > 0 ? Math.round((activeInRange / total) * 100) : 0
   const onlineNow = allUsers.filter(u => u.is_online).length
-  const mau = allUsers.filter(u => u.last_active && new Date(u.last_active) > day30).length
+  const mau = allUsers.filter(u => u.last_active && new Date(u.last_active) > rangeStart).length
 
-  const dauDays = Array.from({ length: 30 }, (_, i) => {
-    const d = new Date(now); d.setDate(d.getDate() - (29 - i))
+  const dauDays = Array.from({ length: dateRange }, (_, i) => {
+    const d = new Date(now); d.setDate(d.getDate() - (dateRange - 1 - i))
     const str = d.toISOString().split('T')[0]
-    return { count: allUsers.filter(u => u.last_active && u.last_active.startsWith(str)).length, isToday: i === 29 }
+    const label = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+    return { count: allUsers.filter(u => u.last_active && u.last_active.startsWith(str)).length, isToday: i === dateRange - 1, label }
   })
-  const signupDays = Array.from({ length: 14 }, (_, i) => {
-    const d = new Date(now); d.setDate(d.getDate() - (13 - i))
+  const signupDays = Array.from({ length: Math.min(dateRange, 30) }, (_, i) => {
+    const d = new Date(now); d.setDate(d.getDate() - (Math.min(dateRange, 30) - 1 - i))
     const str = d.toISOString().split('T')[0]
-    return { count: allUsers.filter(u => u.created_at && u.created_at.startsWith(str)).length }
+    const label = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })
+    return { count: allUsers.filter(u => u.created_at && u.created_at.startsWith(str)).length, label }
   })
 
   function topMap(field, limit = 8) {
@@ -192,8 +217,15 @@ export default function AnalyticsPage() {
       <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}} @keyframes spin{to{transform:rotate(360deg)}}`}</style>
 
       {/* Sub-topbar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 32px', borderBottom: '1px solid #1a1a1a', background: '#0a0a0a', position: 'sticky', top: 60, zIndex: 50 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 32px', borderBottom: '1px solid #1a1a1a', background: '#0a0a0a', position: 'sticky', top: 60, zIndex: 50 }}>
         <div style={{ fontSize: 12, color: '#555' }}>{lastUpdated}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#111', border: '1px solid #222', borderRadius: 10, padding: 3 }}>
+          {[7, 30, 90].map(d => (
+            <button key={d} onClick={() => setDateRange(d)} style={{ padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 500, cursor: 'pointer', fontFamily: 'inherit', border: dateRange === d ? '1px solid #2a2a2a' : '1px solid transparent', background: dateRange === d ? '#181818' : 'transparent', color: dateRange === d ? '#f0f0f0' : '#555' }}>
+              {d}d
+            </button>
+          ))}
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <span style={{ fontSize: 11, padding: '4px 10px', borderRadius: 20, background: '#00D9A522', color: '#00D9A5', border: '1px solid #00D9A533', fontWeight: 500 }}>● Live</span>
           <button onClick={() => loadAll()} style={{ background: '#181818', border: '1px solid #2a2a2a', borderRadius: 10, padding: '7px 14px', color: '#888', fontSize: 13, cursor: 'pointer', fontFamily: 'inherit' }}>↻ Refresh</button>
@@ -238,8 +270,8 @@ export default function AnalyticsPage() {
           {/* Metrics grid */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 20 }}>
             {[
-              { label: 'Total users', val: total, sub: `${new30} new this month` },
-              { label: 'Active (7 days)', val: active7, sub: `${Math.round((active7 / Math.max(total, 1)) * 100)}% of all users`, subColor: '#00D9A5' },
+              { label: 'Total users', val: total, sub: `${newInRange} new in ${dateRange}d` },
+              { label: `Active (${dateRange}d)`, val: activeInRange, sub: `${Math.round((activeInRange / Math.max(total, 1)) * 100)}% of all users`, subColor: '#00D9A5' },
               { label: 'Active today', val: activeToday, sub: 'opened app today' },
               { label: 'FCM registered', val: fcmCount, sub: `${onlineNow} online right now` },
             ].map((m, i) => (
@@ -254,7 +286,7 @@ export default function AnalyticsPage() {
           {/* DAU chart */}
           <div style={{ ...S.card, marginBottom: 20 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-              <div style={S.label}>DAU — Daily Active Users (last 30 days)</div>
+              <div style={S.label}>DAU — Daily Active Users (last {dateRange} days)</div>
               <div style={{ fontSize: 12, color: '#888' }}>MAU: <span style={{ color: '#6C63FF', fontWeight: 600 }}>{mau}</span></div>
             </div>
             <MiniChart days={dauDays} colorFn={d => d.isToday ? '#00D9A5' : d.count > 0 ? '#6C63FF' : '#181818'} />
@@ -282,7 +314,7 @@ export default function AnalyticsPage() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
-            {[['New (last 7d)', new7, 'New signups'], ['New (last 30d)', new30, 'New signups'], ['Retention (7d)', `${retention}%`, 'Came back after day 1']].map(([l, v, s]) => (
+            {[[`New (last 7d)`, new7, 'New signups'], [`New (${dateRange}d)`, newInRange, 'New signups'], [`Retention (${dateRange}d)`, `${retention}%`, 'Came back after day 1']].map(([l, v, s]) => (
               <div key={l} style={S.metric}><div style={S.metricLabel}>{l}</div><div style={S.metricVal}>{v}</div><div style={{ fontSize: 12, marginTop: 6, color: '#888' }}>{s}</div></div>
             ))}
           </div>
