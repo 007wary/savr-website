@@ -22,7 +22,7 @@ export default function EditPost({ params }) {
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token')
-    if (!token) { router.push('/admin'); return }
+    if (!token) { router.push('/habgra'); return }
     fetchPost(token)
   }, [])
 
@@ -30,10 +30,10 @@ export default function EditPost({ params }) {
     const res = await fetch('/api/admin', {
       headers: { 'x-admin-token': token }
     })
-    if (res.status === 401) { router.push('/admin'); return }
+    if (res.status === 401) { router.push('/habgra'); return }
     const posts = await res.json()
     const post = posts.find(p => p.id === id)
-    if (!post) { router.push('/admin/posts'); return }
+    if (!post) { router.push('/habgra/posts'); return }
 
     setTitle(post.title)
     setSlug(post.slug)
@@ -77,7 +77,7 @@ export default function EditPost({ params }) {
     })
 
     if (res.ok) {
-      router.push('/admin/posts')
+      router.push('/habgra/posts')
     } else {
       const err = await res.json()
       setMessage(err.error || 'Something went wrong.')
@@ -96,7 +96,7 @@ export default function EditPost({ params }) {
       <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 32px' }}>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
-          <button onClick={() => router.push('/admin/posts')} style={{ color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
+          <button onClick={() => router.push('/habgra/posts')} style={{ color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
             ← Back
           </button>
           <div style={{ display: 'flex', gap: '10px' }}>

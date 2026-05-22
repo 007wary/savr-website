@@ -20,7 +20,7 @@ export default function NewPost() {
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token')
-    if (!token) router.push('/admin')
+    if (!token) router.push('/habgra')
   }, [])
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function NewPost() {
     })
 
     if (res.ok) {
-      router.push('/admin/posts')
+      router.push('/habgra/posts')
     } else {
       const err = await res.json()
       setMessage(err.error || 'Something went wrong.')
@@ -59,7 +59,7 @@ export default function NewPost() {
       <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 32px' }}>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px' }}>
-          <button onClick={() => router.push('/admin/posts')} style={{ color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
+          <button onClick={() => router.push('/habgra/posts')} style={{ color: '#9ca3af', background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px' }}>
             ← Back
           </button>
           <div style={{ display: 'flex', gap: '10px' }}>

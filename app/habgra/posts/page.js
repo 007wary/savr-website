@@ -48,7 +48,7 @@ export default function AdminPosts() {
             <p style={{ color: '#6b7280', fontSize: '14px' }}>{posts.length} total</p>
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
-            <Link href="/admin/posts/new" style={{
+            <Link href="/habgra/posts/new" style={{
               background: '#6C63FF', color: '#fff', fontWeight: '600',
               padding: '10px 20px', borderRadius: '12px', textDecoration: 'none',
               fontSize: '14px', transition: 'background 0.2s ease',
@@ -62,7 +62,7 @@ export default function AdminPosts() {
         {posts.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 0', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px' }}>
             <p style={{ color: '#6b7280', fontSize: '16px', marginBottom: '16px' }}>No posts yet.</p>
-            <Link href="/admin/posts/new" style={{ color: '#6C63FF', textDecoration: 'none', fontSize: '14px' }}>
+            <Link href="/habgra/posts/new" style={{ color: '#6C63FF', textDecoration: 'none', fontSize: '14px' }}>
               Write your first post →
             </Link>
           </div>
@@ -97,7 +97,7 @@ export default function AdminPosts() {
                   </p>
                 </div>
                 <div style={{ display: 'flex', gap: '8px', flexShrink: 0 }}>
-                  <Link href={`/admin/posts/${post.id}/edit`} style={{
+                  <Link href={`/habgra/posts/${post.id}/edit`} style={{
                     background: 'rgba(255,255,255,0.05)', color: '#d1d5db',
                     padding: '8px 16px', borderRadius: '10px', textDecoration: 'none',
                     fontSize: '13px', fontWeight: '500',
