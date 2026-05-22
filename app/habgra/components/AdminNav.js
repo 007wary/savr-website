@@ -44,7 +44,7 @@ export default function AdminNav() {
           }}>
             {[
               { label: 'Posts', href: '/habgra/posts' },
-              { label: 'Analytics', href: '/admin/analytics' },
+              { label: 'Analytics', href: '/habgra/analytics' },
             ].map(({ label, href }) => {
               const active = pathname.startsWith(href)
               return (
