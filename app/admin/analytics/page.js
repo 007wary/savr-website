@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 
 const PROXY_URL = 'https://fsrbsqhlgfdqugixqtxc.supabase.co/functions/v1/analytics-proxy'
-const PROXY_SECRET = '007Mw@@==00'
+const PROXY_SECRET = process.env.NEXT_PUBLIC_ANALYTICS_SECRET
 const PAGE_SIZE = 20
 
 function timeAgo(date) {
