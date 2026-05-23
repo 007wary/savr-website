@@ -102,12 +102,12 @@ export default function WhySavr() {
             Savr vs the rest
           </p>
           <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '500px' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: '500px', tableLayout: 'fixed' }}>
               <thead>
                 <tr>
                   {['Feature', 'Savr', 'Wallet', 'Axio'].map((h, i) => (
                     <th key={h} style={{
-                      padding: '12px 16px', textAlign: 'center',
+                      padding: '12px 16px', textAlign: i === 0 ? 'left' : 'center',
                       fontSize: '14px', fontWeight: '600',
                       color: i === 1 ? 'var(--color-primary)' : 'var(--text-muted)',
                       borderBottom: '1px solid var(--border)',
