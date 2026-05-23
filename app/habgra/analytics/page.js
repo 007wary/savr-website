@@ -214,10 +214,20 @@ export default function AnalyticsPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#0a0a0a', paddingTop: '60px', paddingBottom: 80 }}>
-      <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}} @keyframes spin{to{transform:rotate(360deg)}}`}</style>
+      <style>{`
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        @media(max-width:640px){
+          .metrics-grid{grid-template-columns:repeat(2,1fr) !important;}
+          .grid2{grid-template-columns:1fr !important;}
+          .grid3{grid-template-columns:repeat(2,1fr) !important;}
+          .analytics-main{padding:16px !important;}
+          .subtopbar{padding:10px 16px !important; flex-wrap:wrap; gap:8px;}
+        }
+      `}</style>
 
       {/* Sub-topbar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 32px', borderBottom: '1px solid #1a1a1a', background: '#0a0a0a', position: 'sticky', top: 60, zIndex: 50 }}>
+      <div className="subtopbar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 32px', borderBottom: '1px solid #1a1a1a', background: '#0a0a0a', position: 'sticky', top: 60, zIndex: 50 }}>
         <div style={{ fontSize: 12, color: '#555' }}>{lastUpdated}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#111', border: '1px solid #222', borderRadius: 10, padding: 3 }}>
           {[7, 30, 90].map(d => (
@@ -232,7 +242,7 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      <div style={{ padding: '28px 32px', maxWidth: 1200, margin: '0 auto' }}>
+      <div className="analytics-main" style={{ padding: '28px 32px', maxWidth: 1200, margin: '0 auto' }}>
 
         {/* Tabs */}
         <div style={{ display: 'flex', gap: 4, marginBottom: 28, background: '#111', borderRadius: 12, padding: 4, width: 'fit-content', border: '1px solid #222' }}>
@@ -268,7 +278,7 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Metrics grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 20 }}>
+          <div className="metrics-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 20 }}>
             {[
               { label: 'Total users', val: total, sub: `${newInRange} new in ${dateRange}d` },
               { label: `Active (${dateRange}d)`, val: activeInRange, sub: `${Math.round((activeInRange / Math.max(total, 1)) * 100)}% of all users`, subColor: '#00D9A5' },
@@ -298,22 +308,22 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Signup chart + versions */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+          <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
             <div style={S.card}><div style={S.label}>Signups — last 14 days</div><MiniChart days={signupDays} colorFn={(d, i) => d.count > 0 ? ['#6C63FF', '#7B73FF', '#8A84FF'][i % 3] : '#181818'} /></div>
             <div style={S.card}><div style={S.label}>App versions in use</div><BarList items={topMap('app_version', 20).map(([v, c]) => [`v${v}`, c])} color="#6C63FF" /></div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+          <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
             <div style={S.card}><div style={S.label}>Device models</div><BarList items={topMap('device_model')} color="#00D9A5" /></div>
             <div style={S.card}><div style={S.label}>Android versions</div><BarList items={topMap('android_version').map(([v, c]) => [`Android ${v}`, c])} color="#FFB800" /></div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
+          <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
             <div style={S.card}><div style={S.label}>Users by country</div><BarList items={topMap('country', 10).map(([c, n]) => [`${flags[c] || '🌍'} ${c}`, n])} color="#6C63FF" /></div>
             <div style={S.card}><div style={S.label}>Users by timezone</div><BarList items={topMap('timezone').map(([tz, n]) => [tz.split('/').pop().replace(/_/g, ' '), n])} color="#00D9A5" /></div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
+          <div className="grid3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 16 }}>
             {[[`New (last 7d)`, new7, 'New signups'], [`New (${dateRange}d)`, newInRange, 'New signups'], [`Retention (${dateRange}d)`, `${retention}%`, 'Came back after day 1']].map(([l, v, s]) => (
               <div key={l} style={S.metric}><div style={S.metricLabel}>{l}</div><div style={S.metricVal}>{v}</div><div style={{ fontSize: 12, marginTop: 6, color: '#888' }}>{s}</div></div>
             ))}

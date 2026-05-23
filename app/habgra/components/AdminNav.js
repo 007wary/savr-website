@@ -19,7 +19,7 @@ export default function AdminNav() {
       borderBottom: '1px solid rgba(255,255,255,0.08)',
       height: '60px',
       display: 'flex', alignItems: 'center',
-      padding: '0 32px',
+      padding: '0 16px',
     }}>
       <div style={{
         display: 'flex', alignItems: 'center',
@@ -29,9 +29,8 @@ export default function AdminNav() {
 
         {/* Brand */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#6C63FF' }} />
-          <span style={{ color: '#fff', fontWeight: 700, fontSize: 16 }}>Savr</span>
-          <span style={{ color: '#6b7280', fontSize: 13, marginLeft: 4 }}>Admin</span>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#6C63FF', flexShrink: 0 }} />
+          <span style={{ color: '#fff', fontWeight: 700, fontSize: 15 }}>Savr</span>
         </div>
 
         {/* Nav tabs */}
@@ -67,12 +66,12 @@ export default function AdminNav() {
           <button onClick={logout} style={{
             background: 'rgba(255,255,255,0.05)', color: '#9ca3af',
             border: '1px solid rgba(255,255,255,0.1)',
-            padding: '7px 16px', borderRadius: 10,
-            cursor: 'pointer', fontSize: 13, fontWeight: 500,
-            fontFamily: 'inherit',
+            padding: '7px 12px', borderRadius: 10,
+            cursor: 'pointer', fontSize: 12, fontWeight: 500,
+            fontFamily: 'inherit', whiteSpace: 'nowrap',
           }}>Logout</button>
         ) : (
-          <div style={{ width: 80 }} />
+          <div style={{ width: 60 }} />
         )}
 
       </div>
