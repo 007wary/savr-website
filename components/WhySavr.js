@@ -26,9 +26,9 @@ export default function WhySavr() {
           <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
         </svg>
       ),
-      title: 'Built for India',
-      description: 'INR first, Indian categories, Indian SMS patterns. Not a foreign app with a rupee sign slapped on.',
-      tag: 'India native',
+      title: 'Multi-Currency',
+      description: 'Support for 30+ currencies worldwide. Track expenses in any currency, anywhere in the world.',
+      tag: '30+ currencies',
     },
     {
       icon: (
@@ -120,7 +120,7 @@ export default function WhySavr() {
                   ['Offline support', true, false, false],
                   ['Privacy first', true, false, false],
                   ['No loan upsells', true, true, false],
-                  ['India SMS auto-read', true, false, true],
+                  ['Multi-currency support', true, false, false],
                   ['Google Drive backup', true, false, false],
                   ['Free to use', true, true, false],
                 ].map(([label, ...vals]) => (
