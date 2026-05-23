@@ -1,4 +1,4 @@
-import { supabase } from '../../lib/supabase'
+import { supabase } from '../lib/supabase'
 
 export const revalidate = 3600 // refresh every 1 hour
 
