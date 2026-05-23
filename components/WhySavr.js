@@ -107,7 +107,7 @@ export default function WhySavr() {
                 <tr>
                   {['Feature', 'Savr', 'Wallet', 'Axio'].map((h, i) => (
                     <th key={h} style={{
-                      padding: '12px 0', textAlign: i === 0 ? 'left' : 'center', width: i === 0 ? '35%' : 'auto',
+                      padding: '12px 0', textAlign: i === 0 ? 'left' : 'center', width: i === 0 ? '40%' : '20%',
                       fontSize: '14px', fontWeight: '600',
                       color: i === 1 ? 'var(--color-primary)' : 'var(--text-muted)',
                       borderBottom: '1px solid var(--border)',
@@ -127,7 +127,7 @@ export default function WhySavr() {
                   <tr key={label} style={{ borderBottom: '1px solid var(--border)' }}>
                     <td style={{ padding: '14px 0', fontSize: '14px', color: 'var(--text-muted)' }}>{label}</td>
                     {vals.map((v, i) => (
-                      <td key={i} style={{ padding: '14px 0', textAlign: 'center', verticalAlign: 'middle', width: '21.6%' }}>
+                      <td key={i} style={{ padding: '14px 0', textAlign: 'center', verticalAlign: 'middle', width: '20%' }}>
                         {v ? (
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={i === 0 ? '#6C63FF' : '#4ADE80'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="20 6 9 17 4 12"/>
