@@ -47,9 +47,15 @@ export default function Footer() {
             </div>
 
             {/* Product Hunt Badge */}
-            <div style={{ marginTop: '20px' }}>
-              <a href="https://www.producthunt.com/products/savr-3?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-savr-3" target="_blank" rel="noopener noreferrer">
-                <img alt="Savr - Track expenses offline. Your data never leaves your phone. | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1154120&theme=dark&t=1779551672363" />
+            <div style={{ marginTop: '20px', minHeight: '54px' }}>
+              <a href="https://www.producthunt.com/products/savr-3?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-savr-3" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block' }}>
+                <img 
+                  alt="Savr on Product Hunt" 
+                  width="250" 
+                  height="54" 
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1154120&theme=dark&t=1779551672363"
+                  style={{ display: 'block', width: '250px', height: '54px' }}
+                />
               </a>
             </div>
           </div>
