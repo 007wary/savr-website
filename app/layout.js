@@ -18,7 +18,7 @@ export const metadata = {
   authors: [{ name: 'Wary Dev' }],
   creator: 'Wary Dev',
   openGraph: {
-    title: 'Savr – Free Expense Tracker Built for India',
+    title: 'Savr – Free Offline Expense & Budget Tracker',
     description: 'Free expense tracker & budget planner app for Android. Track spending, set budgets, automatic Google Drive backup. No ads, no data harvesting. Download free.',
     url: 'https://savrappindia.vercel.app',
     siteName: 'Savr',
@@ -28,7 +28,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Savr – Free Expense Tracker Built for India',
+    title: 'Savr – Free Offline Expense & Budget Tracker',
     description: 'Free expense tracker & budget planner for Android. Track spending, set budgets, no data harvesting.',
     images: ['https://savrappindia.vercel.app/og-image.svg'],
   },
