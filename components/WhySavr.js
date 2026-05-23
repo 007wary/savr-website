@@ -133,7 +133,7 @@ export default function WhySavr() {
                   <tr key={label} style={{ borderBottom: '1px solid var(--border)' }}>
                     <td style={{ padding: '14px 16px', fontSize: '14px', color: 'var(--text-muted)' }}>{label}</td>
                     {vals.map((v, i) => (
-                      <td key={i} style={{ padding: '14px 16px', textAlign: 'center' }}>
+                      <td key={i} style={{ padding: '14px 0', textAlign: 'center' }}>
                         {v ? (
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={i === 0 ? '#6C63FF' : '#4ADE80'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                             <polyline points="20 6 9 17 4 12"/>
