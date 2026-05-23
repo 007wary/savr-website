@@ -172,11 +172,11 @@ function PhoneMockup() {
         <path d="M226 104 Q236 98 246 104" stroke="#888899" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
         <rect x="20" y="130" width="240" height="100" rx="16" fill="#6C63FF"/>
         <text x="36" y="158" fill="rgba(255,255,255,0.7)" fontSize="12" fontFamily="Inter">Total Balance</text>
-        <text x="36" y="188" fill="white" fontSize="26" fontWeight="bold" fontFamily="Inter">Rs. 24,500</text>
+        <text x="36" y="188" fill="white" fontSize="26" fontWeight="bold" fontFamily="Inter">$24,500</text>
         <text x="36" y="210" fill="rgba(255,255,255,0.6)" fontSize="11" fontFamily="Inter">Updated just now</text>
         <rect x="20" y="244" width="112" height="60" rx="12" fill="#13131A"/>
         <text x="36" y="268" fill="#888899" fontSize="10" fontFamily="Inter">Income</text>
-        <text x="36" y="290" fill="#4ADE80" fontSize="14" fontWeight="bold" fontFamily="Inter">Rs. 45,000</text>
+        <text x="36" y="290" fill="#4ADE80" fontSize="14" fontWeight="bold" fontFamily="Inter">$45,000</text>
         <rect x="148" y="244" width="112" height="60" rx="12" fill="#13131A"/>
         <text x="164" y="268" fill="#888899" fontSize="10" fontFamily="Inter">Expenses</text>
         <text x="164" y="290" fill="#F87171" fontSize="14" fontWeight="bold" fontFamily="Inter">Rs. 20,500</text>
