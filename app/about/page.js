@@ -2,8 +2,24 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 export const metadata = {
-  title: 'About | Savr',
-  description: 'Savr is a free offline expense tracker and budget app. Your data stays on your device. No cloud servers, no data harvesting.',
+  title: 'About Savr — Free Offline Expense & Budget Tracker App',
+  description: 'Savr is a free offline expense tracker and budget app for Android. Track expenses, set budgets, Google Drive backup. No data harvesting, no loan upsells. Your Money, Your Control.',
+  keywords: 'about savr, free expense tracker, offline budget app, private expense tracker, money manager app, android finance app',
+  openGraph: {
+    title: 'About Savr — Free Offline Expense & Budget Tracker',
+    description: 'Free offline expense tracker and budget app. Your data stays on your device. No cloud servers, no data harvesting.',
+    url: 'https://savrappindia.vercel.app/about',
+    siteName: 'Savr',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Savr — Free Offline Expense & Budget Tracker',
+    description: 'Free offline expense tracker and budget app. No data harvesting. Your Money, Your Control.',
+  },
+  alternates: {
+    canonical: 'https://savrappindia.vercel.app/about',
+  },
 }
 
 export default function About() {
@@ -15,7 +31,7 @@ export default function About() {
           <div style={{ maxWidth: '740px', margin: '0 auto' }}>
 
             <p style={{ fontSize: '13px', fontWeight: '600', color: 'var(--color-primary)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '12px' }}>About</p>
-            <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '16px' }}>Savr</h1>
+            <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: '800', color: 'var(--text-primary)', marginBottom: '16px' }}>Savr — Free Offline Expense & Budget Tracker</h1>
             <p style={{ fontSize: '18px', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '64px' }}>
               A free offline expense tracker and budget app. Track daily expenses, income and account balances — all stored privately on your device. No cloud servers, no data harvesting, no loan upsells. Your Money, Your Control.
             </p>
@@ -78,24 +94,6 @@ export default function About() {
                 </div>
               ))}
             </div>
-
-            {/* Built by */}
-            <div style={{
-              background: 'var(--color-primary-glow)', border: '1px solid var(--color-primary-border)',
-              borderRadius: '16px', padding: '40px', textAlign: 'center',
-            }}>
-              <h2 style={{ fontSize: '22px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '8px' }}>Built by Wary Dev</h2>
-              <p style={{ fontSize: '15px', color: 'var(--text-muted)', marginBottom: '24px', maxWidth: '480px', margin: '0 auto 24px' }}>
-                Savr is an independent app built by a solo developer. No VC funding, no data deals, no conflict of interest. Just a useful app that respects your privacy.
-              </p>
-              <a href="https://play.google.com/store/apps/details?id=com.saver.savr" target="_blank" rel="noopener noreferrer" style={{
-                display: 'inline-block', background: 'var(--color-primary)', color: '#ffffff',
-                textDecoration: 'none', padding: '13px 28px', borderRadius: '10px', fontSize: '15px', fontWeight: '600',
-              }}>
-                Download Free on Google Play
-              </a>
-            </div>
-
           </div>
         </section>
         <Footer />
