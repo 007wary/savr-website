@@ -86,7 +86,7 @@ export default function Features() {
             Everything you need to manage money
           </h2>
           <p style={{ fontSize: '18px', color: 'var(--text-muted)', maxWidth: '540px', margin: '0 auto', lineHeight: '1.6' }}>
-            Built for Indians who want full control over their finances — without the bloat.
+            Built for everyone who wants full control over their finances — without the bloat.
           </p>
         </div>
 
