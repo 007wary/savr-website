@@ -179,7 +179,7 @@ function PhoneMockup() {
         <text x="36" y="290" fill="#4ADE80" fontSize="14" fontWeight="bold" fontFamily="Inter">$45,000</text>
         <rect x="148" y="244" width="112" height="60" rx="12" fill="#13131A"/>
         <text x="164" y="268" fill="#888899" fontSize="10" fontFamily="Inter">Expenses</text>
-        <text x="164" y="290" fill="#F87171" fontSize="14" fontWeight="bold" fontFamily="Inter">Rs. 20,500</text>
+        <text x="164" y="290" fill="#F87171" fontSize="14" fontWeight="bold" fontFamily="Inter">$20,500</text>
         <text x="24" y="328" fill="white" fontSize="13" fontWeight="600" fontFamily="Inter">Recent Transactions</text>
         <rect x="20" y="348" width="240" height="40" rx="10" fill="#13131A"/>
         <rect x="32" y="356" width="22" height="22" rx="6" fill="#1A1A24"/>
