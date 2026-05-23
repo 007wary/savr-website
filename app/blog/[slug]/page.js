@@ -69,7 +69,7 @@ export async function generateMetadata({ params }) {
     alternates: {
       canonical: `https://savrappindia.vercel.app/blog/${slug}`,
     },
-    keywords: post.excerpt ? post.excerpt.split(' ').slice(0, 10).join(', ') : 'expense tracker, budget app, personal finance',
+    keywords: 'expense tracker, budget tracker, offline expense tracker, free budget app, money manager, personal finance, ' + (post.category ? post.category.toLowerCase() + ', ' : '') + post.title.toLowerCase().split(' ').filter(w => w.length > 3).slice(0, 5).join(', '),
     authors: [{ name: post.author || 'Wary Dev' }],
   }
 }

@@ -20,7 +20,7 @@ async function getAllPosts() {
 }
 
 export const metadata = {
-  title: 'Blog | Savr',
+  title: 'Blog | Savr — Free Expense Tracker & Budget App',
   description: 'Money tips, app updates, and personal finance insights from the Savr team.',
 }
 
