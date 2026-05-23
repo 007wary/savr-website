@@ -113,7 +113,7 @@ export default function WhySavr() {
                 <tr>
                   {['Feature', 'Savr', 'Wallet', 'Axio'].map((h, i) => (
                     <th key={h} style={{
-                      padding: '12px 16px', textAlign: i === 0 ? 'left' : 'center',
+                      padding: '12px 0', textAlign: i === 0 ? 'left' : 'center',
                       fontSize: '14px', fontWeight: '600',
                       color: i === 1 ? 'var(--color-primary)' : 'var(--text-muted)',
                       borderBottom: '1px solid var(--border)',
@@ -131,7 +131,7 @@ export default function WhySavr() {
                   ['Free to use', true, true, false],
                 ].map(([label, ...vals]) => (
                   <tr key={label} style={{ borderBottom: '1px solid var(--border)' }}>
-                    <td style={{ padding: '14px 16px', fontSize: '14px', color: 'var(--text-primary)', textAlign: 'center' }}>{label}</td>
+                    <td style={{ padding: '14px 16px', fontSize: '14px', color: 'var(--text-muted)' }}>{label}</td>
                     {vals.map((v, i) => (
                       <td key={i} style={{ padding: '14px 16px', textAlign: 'center' }}>
                         {v ? (
