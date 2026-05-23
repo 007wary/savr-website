@@ -400,7 +400,7 @@ export default function AnalyticsPage() {
                 ))
             }
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div className="grid2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
             <div style={S.card}>
               <div style={S.label}>Send push notification</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
