@@ -45,16 +45,15 @@ export default function Hero() {
             fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: '800',
             lineHeight: '1.1', marginBottom: '24px', letterSpacing: '-1.5px',
           }}>
-            Free Expense Tracker{' '}
-            <span className="gradient-text">Built for India.</span>
+            Your Money,{' '}
+            <span className="gradient-text">Your Control.</span>
           </h1>
 
           <p style={{
             fontSize: '18px', color: 'var(--text-muted)', lineHeight: '1.7',
             marginBottom: '40px', maxWidth: '480px',
           }}>
-            Savr is the offline-first expense tracker built for India.
-            Track every rupee, set budgets, and back up automatically — no internet required.
+            Free offline expense & budget tracker. Track expenses, set budgets, and back up automatically — no internet required.
           </p>
 
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
