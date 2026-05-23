@@ -65,7 +65,7 @@ export default function TermsOfService() {
               },
               {
                 title: '11. Limitation of Liability',
-                content: `To the maximum extent permitted by applicable law, Savr and its developer shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the app, including but not limited to loss of data, loss of profits, or financial loss.\n\nOur total liability to you for any claims arising from these terms shall not exceed INR 500.`
+                content: `To the maximum extent permitted by applicable law, Savr and its developer shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use the app, including but not limited to loss of data, loss of profits, or financial loss.\n\nOur total liability to you for any claims arising from these terms shall not exceed USD 5.`
               },
               {
                 title: '12. Data Loss',
@@ -81,7 +81,7 @@ export default function TermsOfService() {
               },
               {
                 title: '15. Governing Law',
-                content: `These terms are governed by the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts of India.`
+                content: `These terms are governed by applicable law. Any disputes arising from these terms shall be resolved through binding arbitration or the courts of the jurisdiction in which you reside.`
               },
               {
                 title: '16. Contact Us',
