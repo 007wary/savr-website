@@ -17,7 +17,7 @@ export async function generateStaticParams() {
 }
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('en-IN', {
+  return new Date(dateStr).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric'
   })
 }
@@ -69,6 +69,8 @@ export async function generateMetadata({ params }) {
     alternates: {
       canonical: `https://savrappindia.vercel.app/blog/${slug}`,
     },
+    keywords: post.excerpt ? post.excerpt.split(' ').slice(0, 10).join(', ') : 'expense tracker, budget app, personal finance',
+    authors: [{ name: post.author || 'Wary Dev' }],
   }
 }
 
@@ -134,6 +136,18 @@ export default async function PostPage({ params }) {
           </div>
         </div>
 
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: post.title,
+          description: post.excerpt || '',
+          image: post.cover_image || '',
+          author: { '@type': 'Person', name: post.author || 'Wary Dev' },
+          publisher: { '@type': 'Organization', name: 'Savr', url: 'https://savrappindia.vercel.app' },
+          datePublished: post.created_at,
+          dateModified: post.updated_at || post.created_at,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': `https://savrappindia.vercel.app/blog/${slug}` },
+        })}} />
         <ShareButtons title={post.title} slug={slug} />
 
         {post.cover_image && (
