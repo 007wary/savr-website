@@ -125,7 +125,7 @@ export default function WhySavr() {
                   ['Free to use', true, true, false],
                 ].map(([label, ...vals]) => (
                   <tr key={label} style={{ borderBottom: '1px solid var(--border)' }}>
-                    <td style={{ padding: '14px 0', fontSize: '14px', color: 'var(--text-muted)' }}>{label}</td>
+                    <td style={{ padding: '14px 0', width: '40%', fontSize: '14px', color: 'var(--text-muted)' }}>{label}</td>
                     {vals.map((v, i) => (
                       <td key={i} style={{ padding: '14px 0', textAlign: 'center', verticalAlign: 'middle', width: '20%' }}>
                         {v ? (
