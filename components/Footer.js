@@ -17,7 +17,7 @@ export default function Footer() {
               display: 'inline-block',
             }}>Savr</div>
             <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: '1.7', maxWidth: '280px', marginBottom: '24px' }}>
-              The offline-first expense tracker built for India. Your money, in control.
+              Free offline expense & budget tracker. Your Money, Your Control.
             </p>
             <div style={{ display: 'flex', gap: '12px' }}>
               <a href="mailto:007mwnswrangwary@gmail.com" style={{
@@ -98,7 +98,7 @@ export default function Footer() {
             © 2026 Savr. Built by <span style={{ color: 'var(--text-muted)' }}>Wary Dev.</span>
           </p>
           <p style={{ fontSize: '13px', color: 'var(--text-subtle)' }}>
-            Made with ♥ in India
+            Made with ♥ for everyone
           </p>
         </div>
       </div>
