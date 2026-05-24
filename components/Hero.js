@@ -107,6 +107,7 @@ function PlayStoreBadge() {
       target="_blank"
       rel="noopener noreferrer"
       className="playstore-badge"
+      onClick={() => window.gtag?.('event', 'download_click', { event_category: 'engagement', event_label: 'hero_playstore_button' })}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: '12px',
         background: '#000', color: '#fff',
