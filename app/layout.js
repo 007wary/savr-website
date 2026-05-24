@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
+import Script from 'next/script'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -58,6 +59,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.variable}>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-1N2VGVWRSM" strategy="afterInteractive" />
+<Script id="google-analytics" strategy="afterInteractive">{`
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-1N2VGVWRSM');
+`}</Script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <Navbar />
         {children}
