@@ -10,6 +10,7 @@ const inter = Inter({
 })
 
 export const metadata = {
+  metadataBase: new URL('https://savrappindia.vercel.app'),
   verification: {
     google: 'LhDba_-p3HJwjp-EbkjyvKZp8SjVn7EttjlrptBvEd0',
   },
@@ -18,6 +19,9 @@ export const metadata = {
   keywords: 'free expense tracker, budget tracker app, offline expense tracker, money manager app, personal finance app, budget planner, expense manager, android budget app, track expenses, financial tracker',
   authors: [{ name: 'Wary Dev' }],
   creator: 'Wary Dev',
+  alternates: {
+    canonical: 'https://savrappindia.vercel.app',
+  },
   openGraph: {
     title: 'Savr – Free Offline Expense & Budget Tracker',
     description: 'Free expense tracker & budget planner app for Android. Track spending, set budgets, automatic Google Drive backup. No ads, no data harvesting. Download free.',
@@ -49,10 +53,18 @@ export const jsonLd = {
   name: 'Savr',
   operatingSystem: 'Android',
   applicationCategory: 'FinanceApplication',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  applicationId: 'com.saver.savr',
+  softwareVersion: '1.7.1',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'INR' },
   description: 'Savr is a free offline expense tracker and budget planner for Android. Track expenses, set budgets, automatic Google Drive backup. No data harvesting. Your Money, Your Control.',
   author: { '@type': 'Person', name: 'Mwnswrang Wary' },
   url: 'https://play.google.com/store/apps/details?id=com.saver.savr',
+  downloadUrl: 'https://play.google.com/store/apps/details?id=com.saver.savr',
+  sameAs: [
+    'https://play.google.com/store/apps/details?id=com.saver.savr',
+    'https://github.com/007wary/Savr',
+    'https://savrappindia.vercel.app',
+  ],
 }
 
 export default function RootLayout({ children }) {
@@ -60,7 +72,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body className={inter.variable}>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-1N2VGVWRSM" strategy="afterInteractive" />
-<Script id="google-analytics" strategy="afterInteractive">{`
+        <Script id="google-analytics" strategy="afterInteractive">{`
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());

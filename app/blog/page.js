@@ -22,6 +22,36 @@ async function getAllPosts() {
 export const metadata = {
   title: 'Blog | Savr — Free Expense Tracker & Budget App',
   description: 'Money tips, app updates, and personal finance insights from the Savr team.',
+  alternates: {
+    canonical: 'https://savrappindia.vercel.app/blog',
+  },
+  openGraph: {
+    title: 'Blog | Savr — Money Tips & App Updates',
+    description: 'Money tips, app updates, and personal finance insights from the Savr team.',
+    url: 'https://savrappindia.vercel.app/blog',
+    siteName: 'Savr',
+    locale: 'en_US',
+    type: 'website',
+    images: [{ url: 'https://savrappindia.vercel.app/og-image.svg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Savr — Money Tips & App Updates',
+    description: 'Money tips, app updates, and personal finance insights from the Savr team.',
+    images: ['https://savrappindia.vercel.app/og-image.svg'],
+  },
+}
+
+const blogPageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Savr Blog',
+  description: 'Money tips, app updates, and personal finance insights from the Savr team.',
+  url: 'https://savrappindia.vercel.app/blog',
+  publisher: {
+    '@type': 'Person',
+    name: 'Mwnswrang Wary',
+  },
 }
 
 export default async function BlogPage() {
@@ -35,6 +65,7 @@ export default async function BlogPage() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPageJsonLd) }} />
       <main style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingTop: '100px', paddingBottom: '0' }}>
         <div className="container" style={{ maxWidth: '1100px' }}>
 
