@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.saver.savr",
+    "sha256_cert_fingerprints": [
+      "7F:2F:41:DA:6D:57:2C:EE:D0:E1:1A:7E:88:76:2F:3F:AF:A7:4A:B0:2A:35:3F:5F:73:B7:6E:1E:9A:98:47:D7"
+    ]
+  }
+}]
